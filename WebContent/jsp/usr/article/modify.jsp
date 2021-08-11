@@ -1,16 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<%@ page import ="com.sbs.example.jspCommunity.dto.Board" %>
-<%@ page import ="com.sbs.example.jspCommunity.dto.Article" %>
-<%
-	Board board = (Board) request.getAttribute("board");
-	//Article article = (Article) request.getAttribute("article"); // el : ${}로 바꾸기 위해 주석처리, dto에 getter/setter을 만들어야 사용 가능
-	
-	String pageTitle = board.getName() + " 게시물 수정페이지";
-%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="pageTitle" value="${board.name} 게시물 수정페이지" />
+				<!-- req.getAttribute한다음 board로 캐스팅하고 get.Name()한것과 같음, 이렇게 작성하면 board를 import할 필요 없다  -->
 <%@ include file="../../part/head.jspf" %>
-	<h1><%=pageTitle%></h1>
+	<h1>${pageTitle}</h1>
 
 	<div>
 		<form action="doModify" method="post">

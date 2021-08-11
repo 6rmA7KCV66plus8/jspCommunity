@@ -1,14 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import ="java.util.Map" %>
-<%@ page import ="com.sbs.example.jspCommunity.dto.Article" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%
-	String pageTitle =" 게시물 상세페이지";
-%>
+<c:set var="pageTitle" value="${article.extra__boardName} 게시물 상세페이지" />
 <%@ include file="../../part/head.jspf" %>
-	<h1><%=pageTitle %></h1>
-
+	<h1>${pageTitle}</h1>
+	
 	<div>
 		번호 : 
 		${article.id} <!-- 이걸 쓰려면 getter setter을 만들어 줘야함 -->
