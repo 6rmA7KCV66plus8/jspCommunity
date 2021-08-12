@@ -17,7 +17,7 @@ import com.sbs.example.mysqlutil.MysqlUtil;
 // HttpServlet을 상속 받아야함 : extends HttpServlet
 
 @WebServlet("/usr/*") // /usr로 시작하는 모든 것을 가져옴
-public class DispatcherServlet extends HttpServlet {
+public class UsrDispatcherServlet extends HttpServlet {
 
 
 	@Override
