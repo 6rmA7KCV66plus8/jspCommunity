@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sbs.example.jspCommunity.container.Container;
-import com.sbs.example.jspCommunity.controller.usr.ArticleController;
-import com.sbs.example.jspCommunity.controller.usr.MemberController;
+import com.sbs.example.jspCommunity.controller.UsrArticleController;
+import com.sbs.example.jspCommunity.controller.UsrMemberController;
 import com.sbs.example.mysqlutil.MysqlUtil;
 
 // HttpServlet을 상속 받아야함 : extends HttpServlet
@@ -42,13 +42,13 @@ public class UsrDispatcherServlet extends HttpServlet {
 		String jspPath = null;
 		
 		if( controllerName.equals("member")) {
-			MemberController memberController = Container.memberController;
+			UsrMemberController memberController = Container.memberController;
 		
 			if(actionMethodName.equals("list")) {
 				jspPath = memberController.showList(request, response); // memberController의 showList를 호출
 			}
 		} else if (controllerName.equals("article")) {
-			ArticleController articleController = Container.articleController;
+			UsrArticleController articleController = Container.articleController;
 			
 			if(actionMethodName.equals("list")) {
 				jspPath = articleController.showList(request, response); // memberController의 showList를 호출

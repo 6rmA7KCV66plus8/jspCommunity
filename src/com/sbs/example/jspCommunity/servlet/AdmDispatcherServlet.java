@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sbs.example.jspCommunity.container.Container;
-import com.sbs.example.jspCommunity.controller.adm.MemberController;
+import com.sbs.example.jspCommunity.controller.AdmMemberController;
 import com.sbs.example.mysqlutil.MysqlUtil;
 
 // HttpServlet을 상속 받아야함 : extends HttpServlet
 
-@WebServlet("/adm/*") // /usr로 시작하는 모든 것을 가져옴
+@WebServlet("/adm/*") // /adm로 시작하는 모든 것을 가져옴
 public class AdmDispatcherServlet extends HttpServlet {
 
 
@@ -41,7 +41,7 @@ public class AdmDispatcherServlet extends HttpServlet {
 		String jspPath = null;
 		
 		if( controllerName.equals("member")) {
-			MemberController memberController = Container.admMemberController;
+			AdmMemberController memberController = Container.admMemberController;
 		
 			if(actionMethodName.equals("list")) {
 				jspPath = memberController.showList(request, response); // memberController의 showList를 호출
