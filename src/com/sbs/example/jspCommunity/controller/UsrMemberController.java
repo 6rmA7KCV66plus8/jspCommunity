@@ -42,7 +42,13 @@ public class UsrMemberController {
 		String nickname = request.getParameter("nickname");
 		String email = request.getParameter("email");
 		String cellphoneNo = request.getParameter("cellphoneNo");
-		
+			// 기존 멤버
+		Member oldMember = memberService.getMemberByLoginId(loginId); // 아이디 중복검사
+		if(oldMember != null) {
+			request.setAttribute("alertMsg", "이미 존재하는 아이디 입니다.");
+			request.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
 		Map<String, Object> joinArgs = new HashMap<>();
 		joinArgs.put("loginId", loginId);
 		joinArgs.put("loginPw", loginPw);

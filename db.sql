@@ -21,7 +21,7 @@ CREATE TABLE `member`(
     `email` VARCHAR(100) NOT NULL,
     loginId CHAR(50) NOT NULL UNIQUE,
     loginPw VARCHAR(200) NOT NULL,
-    adminLevel TINYINT(1) UNSIGNED NOT NULL DEFAULT 2 COMMENT '0=탈퇴/1=정지/2=일반/3=인증/4=관리자'
+    authLevel TINYINT(1) UNSIGNED NOT NULL DEFAULT 2 COMMENT '0=탈퇴/1=정지/2=일반/3=인증/4=관리자'
 );
 
 # 회원1 생성
@@ -118,3 +118,15 @@ SET regDate = NOW(),
     boardId = 1,
     title = '제목5',
     `body` = '내용5';         
+
+
+# adminLebel 컬럼을 authLevel로 변경
+ALTER TABLE `article``article``member` CHANGE `adminLevel` `authLevel` TINYINT UNSIGNED DEFAULT 2 NOT NULL COMMENT '0=탈퇴/1=정지/2=일반/3=인증/4=관리자'; 
+
+# 중요한 순서대로 기존 컬럼 위치 변경, cellphoneNo컬럼 추가
+ALTER TABLE `member` CHANGE `loginId` `loginId` CHAR(50) NOT NULL AFTER `updateDate`, 
+                     CHANGE `loginPw` `loginPw` VARCHAR(200) NOT NULL AFTER `loginId`,
+                     ADD COLUMN `cellphoneNo` CHAR(20) NOT NULL AFTER `email`; 
+
+# adminLebel을 authLevel로 컬럼명 변경   
+ALTER TABLE `member` CHANGE `adminLevel` `authLevel` TINYINT UNSIGNED DEFAULT 2 NOT NULL COMMENT '0=탈퇴/1=정지/2=일반/3=인증/4=관리자'; 
