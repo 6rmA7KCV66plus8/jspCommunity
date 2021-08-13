@@ -83,12 +83,12 @@ public class ArticleDao {
 		sql.append("INSERT INTO article");
 		sql.append("SET regDate = NOW()");
 		sql.append(", updateDate = NOW()"); 
-		sql.append(", memberId = ?", args.get("memberId"));
 		sql.append(", boardId = ?", args.get("boardId"));
+		sql.append(", memberId = ?", args.get("memberId"));
 		sql.append(", title = ?", args.get("title"));
 		sql.append(", `body` = ?", args.get("body"));
 		
-		return MysqlUtil.delete(sql);
+		return MysqlUtil.insert(sql);
 
 	}
 	//글삭제
