@@ -55,6 +55,12 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 			else if(actionMethodName.equals("doJoin")) {
 				jspPath = memberController.doJoin(request, response); // memberController의 showList를 호출
 			}
+			else if(actionMethodName.equals("login")) {
+				jspPath = memberController.showLogin(request, response); // memberController의 showList를 호출
+			}
+			else if(actionMethodName.equals("doLogin")) {
+				jspPath = memberController.doLogin(request, response); // memberController의 showList를 호출
+			}
 		} else if (controllerName.equals("article")) {
 			UsrArticleController articleController = Container.articleController;
 			

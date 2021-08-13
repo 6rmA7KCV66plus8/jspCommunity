@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.sbs.example.jspCommunity.container.Container;
 import com.sbs.example.jspCommunity.dto.Board;
@@ -60,7 +61,35 @@ public class UsrMemberController {
 		int newArticleId = memberService.join(joinArgs);
 		
 		request.setAttribute("alertMsg", newArticleId + "번 회원이 생성되었습니다.");
-		request.setAttribute("replaceUrl", "join");
+		request.setAttribute("replaceUrl", "../home/main");
+		return "common/redirect";
+	}
+	
+	public String showLogin(HttpServletRequest request, HttpServletResponse response) {
+		return "usr/member/login";
+	}
+	
+	public String doLogin(HttpServletRequest request, HttpServletResponse response) {
+		String loginId = request.getParameter("loginId");
+		String loginPw = request.getParameter("loginPw");
+		
+		Member member = memberService.getMemberByLoginId(loginId); // 아이디 중복검사
+		if(member == null) {
+			request.setAttribute("alertMsg", "해당 계정이 존재하지 않습니다.");
+			request.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		if(member.getLoginPw().equals(loginPw) == false) {
+			request.setAttribute("alertMsg", "비밀번호가 일치하지 않습니다.");
+			request.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		//로그인 처리
+		HttpSession session = request.getSession();
+		session.setAttribute("loginedMemberId", member.getId());
+
+		request.setAttribute("alertMsg", String.format("%s님 환영합니다.", member.getNickname()));
+		request.setAttribute("replaceUrl", "../home/main");
 		return "common/redirect";
 	}
 }
