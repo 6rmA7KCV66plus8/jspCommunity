@@ -33,7 +33,7 @@ public class UsrMemberController {
 		
 		return "usr/member/join";
 	}
-	//글 작성
+	//
 	public String doJoin(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		String loginId = request.getParameter("loginId");
@@ -41,7 +41,7 @@ public class UsrMemberController {
 		String name = request.getParameter("name");
 		String nickname = request.getParameter("nickname");
 		String email = request.getParameter("email");
-		//String cellphoneNo = request.getParameter("cellphoneNo");
+		String cellphoneNo = request.getParameter("cellphoneNo");
 		
 		Map<String, Object> joinArgs = new HashMap<>();
 		joinArgs.put("loginId", loginId);
@@ -49,7 +49,7 @@ public class UsrMemberController {
 		joinArgs.put("name", name);
 		joinArgs.put("nickname", nickname);
 		joinArgs.put("email", email);
-		//joinArgs.put("cellphoneNo", cellphoneNo);
+		joinArgs.put("cellphoneNo", cellphoneNo);
 		
 		int newArticleId = memberService.join(joinArgs);
 		

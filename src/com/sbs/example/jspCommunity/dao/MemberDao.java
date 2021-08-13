@@ -42,7 +42,6 @@ public class MemberDao {
 		sql.append(", email = ?", args.get("email"));
 		//sql.append(", cellphoneNo = ?", args.get("cellphoneNo"));
 		
-		
 		return MysqlUtil.insert(sql);
 	}
 
