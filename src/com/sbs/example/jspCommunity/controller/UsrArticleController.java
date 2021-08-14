@@ -77,7 +77,7 @@ public class UsrArticleController {
 			return "common/redirect";
 		}
 		
-		int memberId = Integer.parseInt(request.getParameter("memberId"));
+		int memberId = (int)session.getAttribute("loginedMemberId");
 		int boardId = Integer.parseInt(request.getParameter("boardId"));
 		String title = request.getParameter("title");
 		String body = request.getParameter("body");
@@ -97,18 +97,23 @@ public class UsrArticleController {
 	//글 삭제
 	public String doDelete(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		if(session.getAttribute("loginedMemberId") == null) {
+		if(session.getAttribute("loginedMemberId") == null) { // 로그인이 되어있는지 체크
 			request.setAttribute("alertMsg", "로그인을 해주세요.");
 			request.setAttribute("historyBack", true);
 			return "common/redirect";
 		}
-		
 		int id = Integer.parseInt(request.getParameter("id"));
 		
 		Article article = articleService.getForPrintArticleById(id);
 		
 		if(article == null) { // 게시물이 있는지 없는지 확인 
 			request.setAttribute("alertMsg", id + "번 게시물은 존재하지 않습니다.");
+			request.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		int loginedMemberId = (int)session.getAttribute("loginedMemberId");
+		if(article.getMemberId() != loginedMemberId) {//작성자와 로그인된 아이디가 같은지 다른지 체크
+			request.setAttribute("alertMsg", id + "번 게시물에 대한 권한이 없습니다.");
 			request.setAttribute("historyBack", true);
 			return "common/redirect";
 		}
@@ -121,9 +126,9 @@ public class UsrArticleController {
 		request.setAttribute("replaceUrl", String.format("list?boardId=%d", boardId));
 		return "common/redirect";
 	}
-	//글 수정
+	//글 수정 화면
 	public String showModify(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(); // 로그인 체크
 		if(session.getAttribute("loginedMemberId") == null) {
 			request.setAttribute("alertMsg", "로그인을 해주세요.");
 			request.setAttribute("historyBack", true);
@@ -133,8 +138,14 @@ public class UsrArticleController {
 
 		Article article = articleService.getForPrintArticleById(id);
 		
-		if(article == null) {
+		if(article == null) { // 게시물 유무 체크
 			request.setAttribute("alertMsg", id + "번 게시물은 존재하지 않습니다.");
+			request.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		int loginedMemberId = (int)session.getAttribute("loginedMemberId");
+		if(article.getMemberId() != loginedMemberId) { // 게시물id(작성자)와 로그인id가 같은지 확인, 권한 체크
+			request.setAttribute("alertMsg", id + "번 게시물에 대한 권한이 없습니다.");
 			request.setAttribute("historyBack", true);
 			return "common/redirect";
 		}
@@ -163,8 +174,8 @@ public class UsrArticleController {
 			return "common/redirect";
 		}
 		
-		int memberId = Integer.parseInt(request.getParameter("memberId"));
-		if(article.getMemberId() != memberId) {
+		int loginedMemberId = (int)session.getAttribute("loginedMemberId");
+		if(article.getMemberId() != loginedMemberId) {
 			request.setAttribute("alertMsg", id + "번 게시물에 대한 권한이 없습니다.");
 			request.setAttribute("historyBack", true);
 			return "common/redirect";

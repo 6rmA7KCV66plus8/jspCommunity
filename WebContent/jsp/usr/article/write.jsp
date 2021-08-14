@@ -8,7 +8,6 @@
 	<div>
 		<form action="doWrite" method="post">
 			<input type="hidden" name="boardId" value="${board.id }"/>
-			<input type="hidden" name="memberId" value="1"/>
 
 				<div>제목</div>
 				<div><input type="text" name="title" maxlength="50" placeholder="제목"/></div>
