@@ -68,6 +68,15 @@ public class UsrMemberController {
 	public String showLogin(HttpServletRequest request, HttpServletResponse response) {
 		return "usr/member/login";
 	}
+	public String doLogout(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		session.removeAttribute("loginedMemberId");
+		
+		request.setAttribute("alertMsg", "로그아웃이 되었습니다.");
+		request.setAttribute("replaceUrl", "../home/main");
+		return "common/redirect";
+	}
+	
 	
 	public String doLogin(HttpServletRequest request, HttpServletResponse response) {
 		String loginId = request.getParameter("loginId");

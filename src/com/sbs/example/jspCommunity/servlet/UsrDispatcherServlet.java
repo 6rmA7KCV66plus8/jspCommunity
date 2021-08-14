@@ -1,19 +1,13 @@
 package com.sbs.example.jspCommunity.servlet;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sbs.example.jspCommunity.container.Container;
-import com.sbs.example.jspCommunity.controller.AdmMemberController;
 import com.sbs.example.jspCommunity.controller.UsrArticleController;
+import com.sbs.example.jspCommunity.controller.UsrHomeController;
 import com.sbs.example.jspCommunity.controller.UsrMemberController;
-import com.sbs.example.mysqlutil.MysqlUtil;
 
 // DispatcherServlet을 상속 받아야함 : extends DispatcherServlet
 // ex) /usr/member/list : controllerName에 member가 들어가고 actionMethodName에 list가 들어간다 / adm도 동일함
@@ -42,8 +36,14 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 //		MysqlUtil.setDBInfo("127.0.0.1", "kjm", "1234", "jspCommunity");
 //		
 //		String jspPath = null;
-		
-		if( controllerName.equals("member")) {
+		if( controllerName.equals("home")) {
+			UsrHomeController homeController = Container.homeController;
+			
+			if(actionMethodName.equals("main")) {
+				jspPath = homeController.showMain(request, response); // memberController의 showList를 호출
+			}
+		}
+		else if( controllerName.equals("member")) {
 			UsrMemberController memberController = Container.memberController;
 		
 			if(actionMethodName.equals("list")) {
@@ -60,6 +60,9 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 			}
 			else if(actionMethodName.equals("doLogin")) {
 				jspPath = memberController.doLogin(request, response); // memberController의 showList를 호출
+			}
+			else if(actionMethodName.equals("doLogout")) {
+				jspPath = memberController.doLogout(request, response); // memberController의 showList를 호출
 			}
 		} else if (controllerName.equals("article")) {
 			UsrArticleController articleController = Container.articleController;
