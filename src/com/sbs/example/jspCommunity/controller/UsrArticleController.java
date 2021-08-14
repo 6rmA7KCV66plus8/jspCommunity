@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.sbs.example.jspCommunity.container.Container;
 import com.sbs.example.jspCommunity.dto.Article;
@@ -51,7 +52,13 @@ public class UsrArticleController {
 	}
 	//해당 게시판 글 목록 보기
 	public String showWrite(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		if(session.getAttribute("loginedMemberId") == null) {
+			request.setAttribute("alertMsg", "로그인을 해주세요.");
+			request.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		
 		int boardId = Integer.parseInt(request.getParameter("boardId"));
 		
 		Board board = articleService.getBoardById(boardId); // 게시물리스트에 게시판 이름 표시
@@ -63,7 +70,13 @@ public class UsrArticleController {
 	}
 	//글 작성
 	public String doWrite(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		if(session.getAttribute("loginedMemberId") == null) {
+			request.setAttribute("alertMsg", "로그인을 해주세요.");
+			request.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		
 		int memberId = Integer.parseInt(request.getParameter("memberId"));
 		int boardId = Integer.parseInt(request.getParameter("boardId"));
 		String title = request.getParameter("title");
@@ -83,7 +96,13 @@ public class UsrArticleController {
 	}
 	//글 삭제
 	public String doDelete(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		if(session.getAttribute("loginedMemberId") == null) {
+			request.setAttribute("alertMsg", "로그인을 해주세요.");
+			request.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		
 		int id = Integer.parseInt(request.getParameter("id"));
 		
 		Article article = articleService.getForPrintArticleById(id);
@@ -104,7 +123,12 @@ public class UsrArticleController {
 	}
 	//글 수정
 	public String showModify(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		if(session.getAttribute("loginedMemberId") == null) {
+			request.setAttribute("alertMsg", "로그인을 해주세요.");
+			request.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
 		int id = Integer.parseInt(request.getParameter("id"));
 
 		Article article = articleService.getForPrintArticleById(id);
@@ -123,7 +147,12 @@ public class UsrArticleController {
 	}
 	//글 수정
 	public String doModify(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		if(session.getAttribute("loginedMemberId") == null) {
+			request.setAttribute("alertMsg", "로그인을 해주세요.");
+			request.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
 		int id = Integer.parseInt(request.getParameter("id"));
 		
 		Article article = articleService.getForPrintArticleById(id);

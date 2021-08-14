@@ -30,13 +30,25 @@ public class UsrMemberController {
 	}
 	
 	public String showJoin(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		if(session.getAttribute("loginedMemberId") != null) {
+			request.setAttribute("alertMsg", "로그아웃 후 진행해주세요.");
+			request.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
 		
 		return "usr/member/join";
 	}
 	//
 	public String doJoin(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		if(session.getAttribute("loginedMemberId") != null) {
+			request.setAttribute("alertMsg", "로그아웃 후 진행해주세요.");
+			request.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		
 		String loginId = request.getParameter("loginId");
 		String loginPw = request.getParameter("loginPw");
 		String name = request.getParameter("name");
@@ -66,10 +78,23 @@ public class UsrMemberController {
 	}
 	
 	public String showLogin(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		if(session.getAttribute("loginedMemberId") != null) {
+			request.setAttribute("alertMsg", "로그아웃 후 진행해주세요.");
+			request.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		
 		return "usr/member/login";
 	}
 	public String doLogout(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
+		if(session.getAttribute("loginedMemberId") == null) {
+			request.setAttribute("alertMsg", "이미 로그아웃이 되어있습니다.");
+			request.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		
 		session.removeAttribute("loginedMemberId");
 		
 		request.setAttribute("alertMsg", "로그아웃이 되었습니다.");
@@ -79,6 +104,13 @@ public class UsrMemberController {
 	
 	
 	public String doLogin(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		if(session.getAttribute("loginedMemberId") != null) {
+			request.setAttribute("alertMsg", "로그아웃 후 진행해주세요.");
+			request.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		
 		String loginId = request.getParameter("loginId");
 		String loginPw = request.getParameter("loginPw");
 		
@@ -94,7 +126,6 @@ public class UsrMemberController {
 			return "common/redirect";
 		}
 		//로그인 처리
-		HttpSession session = request.getSession();
 		session.setAttribute("loginedMemberId", member.getId());
 
 		request.setAttribute("alertMsg", String.format("%s님 환영합니다.", member.getNickname()));
