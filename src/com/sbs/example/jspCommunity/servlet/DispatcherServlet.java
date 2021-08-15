@@ -109,8 +109,26 @@ public abstract class DispatcherServlet extends HttpServlet {
 				rd.forward(request, response);
 			}
 		}
+		// 로그아웃 필요 인터셉터 시작
+		List<String> needToGoloutActionUrls = new ArrayList<>();
 		
-		// 로그인 필요 필터링 인터셉터 끝
+		// 로그아웃을 해야 들어갈 수 있는 부분들
+		needToGoloutActionUrls.add("/usr/member/login");
+		needToGoloutActionUrls.add("/usr/member/doLogin");
+		needToGoloutActionUrls.add("/usr/member/join");
+		needToGoloutActionUrls.add("/usr/member/doJoin");
+		
+		if(needToLoginActionUrls.contains(actionUrl)) { // 내가 이동하려는 곳이 리스트 4곳이면
+			if((boolean)request.getAttribute("isLogined")) { // 로그인이 되어있음
+				request.setAttribute("alertMsg", "로그아웃을 해주세요.");
+				request.setAttribute("historyBack", true);
+				
+				RequestDispatcher rd = request.getRequestDispatcher("/jsp/common/redirect.jsp");
+				rd.forward(request, response);
+			}
+		}
+		
+		// 로그인, 로그아웃 필요 필터링 인터셉터 끝
 		Map<String, Object> rs = new HashMap<>();
 		rs.put("controllerName", controllerName); // 어떤 컨트롤과 액션메소드가 호출될지 정보를 정한다음 
 		rs.put("actionMethodName", actionMethodName);
