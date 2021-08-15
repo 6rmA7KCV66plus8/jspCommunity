@@ -89,7 +89,6 @@ public abstract class DispatcherServlet extends HttpServlet {
 		// 데이터 추가 인터셉터 끝
 		
 		// 로그인 필요 필터링 인터셉터 시작
-		
 		List<String> needToLoginActionUrls = new ArrayList<>();
 		
 		// 로그인을 해야 들어갈 수 있는 부분들
@@ -118,7 +117,7 @@ public abstract class DispatcherServlet extends HttpServlet {
 		needToGoloutActionUrls.add("/usr/member/join");
 		needToGoloutActionUrls.add("/usr/member/doJoin");
 		
-		if(needToLoginActionUrls.contains(actionUrl)) { // 내가 이동하려는 곳이 리스트 4곳이면
+		if(needToGoloutActionUrls.contains(actionUrl)) { // 내가 이동하려는 곳이 리스트 4곳이면
 			if((boolean)request.getAttribute("isLogined")) { // 로그인이 되어있음
 				request.setAttribute("alertMsg", "로그아웃을 해주세요.");
 				request.setAttribute("historyBack", true);
