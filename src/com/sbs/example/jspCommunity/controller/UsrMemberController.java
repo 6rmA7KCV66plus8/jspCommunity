@@ -12,6 +12,7 @@ import com.sbs.example.jspCommunity.container.Container;
 import com.sbs.example.jspCommunity.dto.Board;
 import com.sbs.example.jspCommunity.dto.Member;
 import com.sbs.example.jspCommunity.service.MemberService;
+import com.sbs.example.util.Util;
 
 public class UsrMemberController {
 	private MemberService memberService;
@@ -137,16 +138,26 @@ public class UsrMemberController {
 	public String getLoginIdDup(HttpServletRequest request, HttpServletResponse response) {
 		String loginId = request.getParameter("loginId");
 		
+		
 		Member member = memberService.getMemberByLoginId(loginId);
 		
-		String data = "";
+		Map<String, Object> rs = new HashMap<>();
+		
+		String resultCode = null; // 이런거 할 땐 널을 넣어주는게 좋음
+		String msg = null;
 		
 		if(member != null) { // 널이 아니니깐 값은 1이므로 계정이 이미 사용중인 상태
-			data = "NO";
+			resultCode ="F-1";
+			msg ="이미 사용중인 아이디 입니다.";
 		} else {
-			data = "YES";
+			resultCode ="S-1";
+			msg ="사용이 가능한 아이디 입니다.";
 		}
-		request.setAttribute("data", data);
+		rs.put("resultCode", resultCode);
+		rs.put("msg", msg);
+		rs.put("loginId", loginId);
+		
+		request.setAttribute("data", Util.getJsonText(rs));
 		return "common/pure";
 	}
 }

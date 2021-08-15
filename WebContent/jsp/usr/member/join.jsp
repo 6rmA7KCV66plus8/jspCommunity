@@ -22,14 +22,15 @@
 				loginId // 이렇게 적어도 됌
 			},
 			function(data){
-				if(data == "YES") {
-					alert("사용이 가능한 아이디 입니다.");
-					DoJoinForm__checkedLoginId = loginId;
-				} else {
-					alert("이미 사용중인 아이디 입니다.");
+				if(data.msg){
+					alert(data.msg);
+				}
+				//data.resultCode를 자른다 앞에서부터 2자(S-)
+				if(data.resultCode.substr(0, 2) == "S-") {
+					DoJoinForm__checkedLoginId = data.loginId;
 				}
 			},
-			"html"
+			"json"
 		);
 	}
 	// 폼 발송전 체크
