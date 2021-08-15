@@ -52,8 +52,7 @@ public class UsrArticleController {
 	}
 	//해당 게시판 글 목록 보기
 	public String showWrite(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		if(session.getAttribute("loginedMemberId") == null) {
+		if((boolean)request.getAttribute("isLogined")) {
 			request.setAttribute("alertMsg", "로그인을 해주세요.");
 			request.setAttribute("historyBack", true);
 			return "common/redirect";
@@ -70,20 +69,19 @@ public class UsrArticleController {
 	}
 	//글 작성
 	public String doWrite(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		if(session.getAttribute("loginedMemberId") == null) {
+		if((boolean)request.getAttribute("isLogined")) {
 			request.setAttribute("alertMsg", "로그인을 해주세요.");
 			request.setAttribute("historyBack", true);
 			return "common/redirect";
 		}
 		
-		int memberId = (int)session.getAttribute("loginedMemberId");
+		int loginedmemberId = (int)request.getAttribute("loginedMemberId");
 		int boardId = Integer.parseInt(request.getParameter("boardId"));
 		String title = request.getParameter("title");
 		String body = request.getParameter("body");
 		
 		Map<String, Object> writeArgs = new HashMap<>();
-		writeArgs.put("memberId", memberId);
+		writeArgs.put("memberId", loginedmemberId);
 		writeArgs.put("boardId", boardId);
 		writeArgs.put("title", title);
 		writeArgs.put("body", body);
@@ -96,8 +94,7 @@ public class UsrArticleController {
 	}
 	//글 삭제
 	public String doDelete(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		if(session.getAttribute("loginedMemberId") == null) { // 로그인이 되어있는지 체크
+		if((boolean)request.getAttribute("isLogined")) {
 			request.setAttribute("alertMsg", "로그인을 해주세요.");
 			request.setAttribute("historyBack", true);
 			return "common/redirect";
@@ -111,7 +108,8 @@ public class UsrArticleController {
 			request.setAttribute("historyBack", true);
 			return "common/redirect";
 		}
-		int loginedMemberId = (int)session.getAttribute("loginedMemberId");
+
+		int loginedMemberId = (int)request.getAttribute("loginedMemberId");
 		if(article.getMemberId() != loginedMemberId) {//작성자와 로그인된 아이디가 같은지 다른지 체크
 			request.setAttribute("alertMsg", id + "번 게시물에 대한 권한이 없습니다.");
 			request.setAttribute("historyBack", true);
@@ -128,8 +126,7 @@ public class UsrArticleController {
 	}
 	//글 수정 화면
 	public String showModify(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession(); // 로그인 체크
-		if(session.getAttribute("loginedMemberId") == null) {
+		if((boolean)request.getAttribute("isLogined")) {
 			request.setAttribute("alertMsg", "로그인을 해주세요.");
 			request.setAttribute("historyBack", true);
 			return "common/redirect";
@@ -143,7 +140,7 @@ public class UsrArticleController {
 			request.setAttribute("historyBack", true);
 			return "common/redirect";
 		}
-		int loginedMemberId = (int)session.getAttribute("loginedMemberId");
+		int loginedMemberId = (int)request.getAttribute("loginedMemberId");
 		if(article.getMemberId() != loginedMemberId) { // 게시물id(작성자)와 로그인id가 같은지 확인, 권한 체크
 			request.setAttribute("alertMsg", id + "번 게시물에 대한 권한이 없습니다.");
 			request.setAttribute("historyBack", true);
@@ -158,8 +155,7 @@ public class UsrArticleController {
 	}
 	//글 수정
 	public String doModify(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		if(session.getAttribute("loginedMemberId") == null) {
+		if((boolean)request.getAttribute("isLogined") == false) {
 			request.setAttribute("alertMsg", "로그인을 해주세요.");
 			request.setAttribute("historyBack", true);
 			return "common/redirect";
@@ -174,7 +170,7 @@ public class UsrArticleController {
 			return "common/redirect";
 		}
 		
-		int loginedMemberId = (int)session.getAttribute("loginedMemberId");
+		int loginedMemberId = (int)request.getAttribute("loginedMemberId");
 		if(article.getMemberId() != loginedMemberId) {
 			request.setAttribute("alertMsg", id + "번 게시물에 대한 권한이 없습니다.");
 			request.setAttribute("historyBack", true);

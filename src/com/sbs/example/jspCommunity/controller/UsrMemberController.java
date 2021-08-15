@@ -89,13 +89,13 @@ public class UsrMemberController {
 		return "usr/member/login";
 	}
 	public String doLogout(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		if(session.getAttribute("loginedMemberId") == null) {
+	
+		if((boolean)request.getAttribute("isLogined") == false) {
 			request.setAttribute("alertMsg", "이미 로그아웃이 되어있습니다.");
 			request.setAttribute("historyBack", true);
 			return "common/redirect";
 		}
-		
+		HttpSession session = request.getSession();
 		session.removeAttribute("loginedMemberId");
 		
 		request.setAttribute("alertMsg", "로그아웃이 되었습니다.");

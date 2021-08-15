@@ -9,7 +9,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.sbs.example.jspCommunity.container.Container;
+import com.sbs.example.jspCommunity.dto.Member;
 import com.sbs.example.mysqlutil.MysqlUtil;
 
 public abstract class DispatcherServlet extends HttpServlet {
@@ -61,6 +64,21 @@ public abstract class DispatcherServlet extends HttpServlet {
 		
 		String controllerName = requestUriBits[3]; // member, article 같은 부분
 		String actionMethodName = requestUriBits[4]; // list.jsp 파일 같은 부분
+		
+		boolean isLogined = false; // isLogined 가 false면 로그인을 안한것
+		int loginedMemberId = 0; // 로그인을 안했다는 뜻
+		Member loginedMember = null;
+
+		HttpSession session = request.getSession();
+		if(session.getAttribute("loginedMemberId") != null) {
+			isLogined = true;
+			loginedMemberId = (int)session.getAttribute("loginedMemberId");
+			loginedMember = Container.memberService.getMemberById(loginedMemberId);
+		}
+		
+		request.setAttribute("isLogined", isLogined);
+		request.setAttribute("loginedMemberId", loginedMemberId);
+		request.setAttribute("loginedMember", loginedMember);
 		
 		Map<String, Object> rs = new HashMap<>();
 		rs.put("controllerName", controllerName); // 어떤 컨트롤과 액션메소드가 호출될지 정보를 정한다음 
