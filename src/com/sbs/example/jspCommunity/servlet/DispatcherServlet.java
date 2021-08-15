@@ -1,7 +1,9 @@
 package com.sbs.example.jspCommunity.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -32,7 +34,7 @@ public abstract class DispatcherServlet extends HttpServlet {
 	
 	
 	public void run(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Map<String, Object> doBeforeActionRs = dobeforeAction(request, response); //run에 의해서 호출이 되면 doBeforeActionRs에 정보가 들어감
+		Map<String, Object> doBeforeActionRs = doBeforeAction(request, response); //run에 의해서 호출이 되면 doBeforeActionRs에 정보가 들어감
 			if(doBeforeActionRs == null) { // 그 정보가 없으면 Map<String, Object> 여기서 처리를 잘 못한거니까 
 				return; // 리턴, 널이 아니면 doAction(71)으로 정보를 넘겨주는데
 			}
@@ -48,7 +50,7 @@ public abstract class DispatcherServlet extends HttpServlet {
 
 
 	// 어떠한 컨트롤 액션이 실행되기 전에 무조건 해야하는 일들
-	private Map<String, Object> dobeforeAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private Map<String, Object> doBeforeAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8"); // 입력받은 req 셋팅
 		response.setContentType("text/html; charset=UTF-8"); // 입력받은 resp 셋팅
 		
@@ -62,9 +64,13 @@ public abstract class DispatcherServlet extends HttpServlet {
 		//db 연결. db는 사용후 끊어줘야함 <48번줄>
 		MysqlUtil.setDBInfo("127.0.0.1", "kjm", "1234", "jspCommunity");
 		
+		String controllerTypeName = requestUriBits[2]; // usr
 		String controllerName = requestUriBits[3]; // member, article 같은 부분
 		String actionMethodName = requestUriBits[4]; // list.jsp 파일 같은 부분
 		
+		String actionUrl = "/" + controllerTypeName + "/" + controllerName + "/" + actionMethodName;
+		
+		//데이터 추가 인터셉터 시작
 		boolean isLogined = false; // isLogined 가 false면 로그인을 안한것
 		int loginedMemberId = 0; // 로그인을 안했다는 뜻
 		Member loginedMember = null;
@@ -80,6 +86,31 @@ public abstract class DispatcherServlet extends HttpServlet {
 		request.setAttribute("loginedMemberId", loginedMemberId);
 		request.setAttribute("loginedMember", loginedMember);
 		
+		// 데이터 추가 인터셉터 끝
+		
+		// 로그인 필요 필터링 인터셉터 시작
+		
+		List<String> needToLoginActionUrls = new ArrayList<>();
+		
+		// 로그인을 해야 들어갈 수 있는 부분들
+		needToLoginActionUrls.add("/usr/member/doLogout");
+		needToLoginActionUrls.add("/usr/article/write");
+		needToLoginActionUrls.add("/usr/article/doWrite");
+		needToLoginActionUrls.add("/usr/article/modify");
+		needToLoginActionUrls.add("/usr/article/doModify");
+		needToLoginActionUrls.add("/usr/article/doDelete");
+		
+		if(needToLoginActionUrls.contains(actionUrl)) { // 내가 이동하려는 곳이 리스트 6곳이면
+			if((boolean)request.getAttribute("isLogined") == false) { // 로그인이 안되어있음
+				request.setAttribute("alertMsg", "로그인을 해주세요.");
+				request.setAttribute("replaceUrl", "../member/login");
+				
+				RequestDispatcher rd = request.getRequestDispatcher("/jsp/common/redirect.jsp");
+				rd.forward(request, response);
+			}
+		}
+		
+		// 로그인 필요 필터링 인터셉터 끝
 		Map<String, Object> rs = new HashMap<>();
 		rs.put("controllerName", controllerName); // 어떤 컨트롤과 액션메소드가 호출될지 정보를 정한다음 
 		rs.put("actionMethodName", actionMethodName);

@@ -52,11 +52,6 @@ public class UsrArticleController {
 	}
 	//해당 게시판 글 목록 보기
 	public String showWrite(HttpServletRequest request, HttpServletResponse response) {
-		if((boolean)request.getAttribute("isLogined")) {
-			request.setAttribute("alertMsg", "로그인을 해주세요.");
-			request.setAttribute("historyBack", true);
-			return "common/redirect";
-		}
 		
 		int boardId = Integer.parseInt(request.getParameter("boardId"));
 		
@@ -69,11 +64,6 @@ public class UsrArticleController {
 	}
 	//글 작성
 	public String doWrite(HttpServletRequest request, HttpServletResponse response) {
-		if((boolean)request.getAttribute("isLogined")) {
-			request.setAttribute("alertMsg", "로그인을 해주세요.");
-			request.setAttribute("historyBack", true);
-			return "common/redirect";
-		}
 		
 		int loginedmemberId = (int)request.getAttribute("loginedMemberId");
 		int boardId = Integer.parseInt(request.getParameter("boardId"));
@@ -94,11 +84,7 @@ public class UsrArticleController {
 	}
 	//글 삭제
 	public String doDelete(HttpServletRequest request, HttpServletResponse response) {
-		if((boolean)request.getAttribute("isLogined")) {
-			request.setAttribute("alertMsg", "로그인을 해주세요.");
-			request.setAttribute("historyBack", true);
-			return "common/redirect";
-		}
+	
 		int id = Integer.parseInt(request.getParameter("id"));
 		
 		Article article = articleService.getForPrintArticleById(id);
@@ -126,11 +112,7 @@ public class UsrArticleController {
 	}
 	//글 수정 화면
 	public String showModify(HttpServletRequest request, HttpServletResponse response) {
-		if((boolean)request.getAttribute("isLogined")) {
-			request.setAttribute("alertMsg", "로그인을 해주세요.");
-			request.setAttribute("historyBack", true);
-			return "common/redirect";
-		}
+		
 		int id = Integer.parseInt(request.getParameter("id"));
 
 		Article article = articleService.getForPrintArticleById(id);
@@ -155,11 +137,7 @@ public class UsrArticleController {
 	}
 	//글 수정
 	public String doModify(HttpServletRequest request, HttpServletResponse response) {
-		if((boolean)request.getAttribute("isLogined") == false) {
-			request.setAttribute("alertMsg", "로그인을 해주세요.");
-			request.setAttribute("historyBack", true);
-			return "common/redirect";
-		}
+		
 		int id = Integer.parseInt(request.getParameter("id"));
 		
 		Article article = articleService.getForPrintArticleById(id);
