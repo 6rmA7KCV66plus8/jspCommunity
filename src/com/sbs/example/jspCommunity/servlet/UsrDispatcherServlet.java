@@ -64,6 +64,10 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 			else if(actionMethodName.equals("doLogout")) {
 				jspPath = memberController.doLogout(request, response); // memberController의 showList를 호출
 			}
+			else if(actionMethodName.equals("getLoginIdDup")) {
+				jspPath = memberController.getLoginIdDup(request, response); // memberController의 showList를 호출
+			}
+			
 		} else if (controllerName.equals("article")) {
 			UsrArticleController articleController = Container.articleController;
 			
@@ -84,6 +88,9 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 			}
 			else if(actionMethodName.equals("doWrite")) {
 				jspPath = articleController.doWrite(request, response);
+			}
+			else if(actionMethodName.equals("doDelete")) {
+				jspPath = articleController.doDelete(request, response);
 			}
 			else if(actionMethodName.equals("doDelete")) {
 				jspPath = articleController.doDelete(request, response);

@@ -8,6 +8,31 @@
 	<div>
 	<script>
 	let DoJoinForm__submited = false; // 중복  작성 방지
+	let DoJoinForm__checkedLoginId = "";
+
+	// 로그인 아이디 중복검사
+	function DoJoinForm__checkLoginIdDup(el) { // DoJoinForm__checkLoginIdDup = el
+		const form = $(el).closest('form').get(0); // 엘리먼트(el) 조상 중에서 가장 가까운 form을 찾아라
+		const loginId = form.loginId.value;
+		
+		$.get(
+			"getLoginIdDup", // 순수한 정보를 얻을 땐 get을 사용, 보는건 show, 처리하는건 do
+			{
+				//loginId: loginId 이렇게 적어도 되고 // 서로 다름 "loginId"(문자열) : loginId(const loginId)를 뜻함
+				loginId // 이렇게 적어도 됌
+			},
+			function(data){
+				if(data == "YES") {
+					alert("사용이 가능한 아이디 입니다.");
+					DoJoinForm__checkedLoginId = loginId;
+				} else {
+					alert("이미 사용중인 아이디 입니다.");
+				}
+			},
+			"html"
+		);
+	}
+	// 폼 발송전 체크
 	function DoJoinForm__submit(form){
 		if(DoJoinForm__submited){ // true
 			alert('처리중 입니다');	
@@ -20,6 +45,12 @@
 				form.loginId.focus(); // 알림창을 닫으면 바로 아이디 부분에 글을 쓸 수 있음
 			return;
 			}
+		if(form.loginId.value != DoJoinForm__checkedLoginId){ // 지금 입력한 아이디(form.loginId.value)가 인증된 로그인 아이디와 다르면
+				alert('아이디 중복체크를 해주세요.');
+				form.btnLoginIdDupCheck.focus();
+				return false;
+			}
+		
 		form.loginPw.value = form.loginPw.value.trim(); // 공백 제거
 		if(form.loginPw.value.length == 0){
 			alert('비밀번호를 입력해주세요.');
@@ -68,37 +99,46 @@
 		<form action="doJoin" method="post" onsubmit="DoJoinForm__submit(this); return false;">
 			<div>
 				<div>아이디</div>
-				<div><input type="text" name="loginId" maxlength="50" placeholder="사용할 아이디를 입력해주세요."/></div>
+				<div>
+				<input type="text" name="loginId" maxlength="50" placeholder="사용할 아이디를 입력해주세요." />
+				<button type="button" onclick="DoJoinForm__checkLoginIdDup(this);" name="btnLoginIdDupCheck">중복체크</button>
+				</div><!-- 여기있는 this는 <button을 말함 -->
 			</div>
 			<hr />
 			<div>
 				<div>비밀번호</div>
-				<div><input type="password" name="loginPw" maxlength="50" placeholder="비밀번호"></textarea></div>
+				<div><input type="password" name="loginPw" maxlength="50" placeholder="비밀번호" />
+				</div>
 			</div>
 			<hr />
 			<div>
 				<div>비밀번호 확인</div>
-				<div><input type="password" name="loginPwConfirm" maxlength="50" placeholder="비밀번호 확인"></textarea></div>
+				<div><input type="password" name="loginPwConfirm" maxlength="50" placeholder="비밀번호 확인" />
+				</div>
 			</div>
 			<hr />
 			<div>
 				<div>이름</div>
-				<div><input type="text" name="name" maxlength="50" placeholder="이름."/></div>
+				<div><input type="text" name="name" maxlength="50" placeholder="이름." />
+				</div>
 			</div>
 			<hr />
 			<div>
 				<div>닉네임</div>
-				<div><input type="text" name="nickname" maxlength="50" placeholder="닉네임."/></div>
+				<div><input type="text" name="nickname" maxlength="50" placeholder="닉네임." />
+				</div>
 			</div>
 			<hr />
 			<div>
 				<div>이메일</div>
-				<div><input type="email" name="email" maxlength="100" placeholder="이메일."/></div>
+				<div><input type="email" name="email" maxlength="100" placeholder="이메일." />
+				</div>
 			</div>
 			<hr />
 			<div>
 				<div>연락처</div>
-				<div><input type="number" name="cellphoneNo" maxlength="10" placeholder="연락처."/></div>
+				<div><input type="number" name="cellphoneNo" maxlength="10" placeholder="연락처."/>
+				</div>
 			</div>
 			<hr />
 			<div>

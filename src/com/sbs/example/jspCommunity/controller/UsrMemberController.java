@@ -132,4 +132,21 @@ public class UsrMemberController {
 		request.setAttribute("replaceUrl", "../home/main");
 		return "common/redirect";
 	}
+	
+	// 아이디 중복검사
+	public String getLoginIdDup(HttpServletRequest request, HttpServletResponse response) {
+		String loginId = request.getParameter("loginId");
+		
+		Member member = memberService.getMemberByLoginId(loginId);
+		
+		String data = "";
+		
+		if(member != null) { // 널이 아니니깐 값은 1이므로 계정이 이미 사용중인 상태
+			data = "NO";
+		} else {
+			data = "YES";
+		}
+		request.setAttribute("data", data);
+		return "common/pure";
+	}
 }
