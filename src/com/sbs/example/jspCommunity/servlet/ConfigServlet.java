@@ -13,7 +13,7 @@ import com.sbs.example.jspCommunity.container.Container;
 import com.sbs.example.jspCommunity.service.EmailService;
 import com.sbs.example.util.Util;
 
-@WebServlet(name = "loadAppConfig", urlPatterns = {"/loadConfig"}, loadOnStartup = 1) 
+@WebServlet(name = "loadAppConfig", urlPatterns = { "/loadConfig" }, loadOnStartup = 1)
 public class ConfigServlet extends HttpServlet {
 	@Override // 프로그램이 실행되면 얘가 가장먼저 실행이 된다
 	public void init(ServletConfig config) throws ServletException {
