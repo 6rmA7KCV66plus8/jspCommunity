@@ -19,23 +19,6 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 	protected String doAction(HttpServletRequest request, HttpServletResponse response, String controllerName, String actionMethodName) {
 		String jspPath = null;
 
-//		request.setCharacterEncoding("UTF-8");
-//		response.setContentType("text/html; charset=UTF-8");
-//		
-//		String requestUri = request.getRequestURI(); // URI : /usr/a/b/c 같은걸 말함
-//		String[] requestUriBits = requestUri.split("/"); // URI를 /로 나눔 
-//		
-//		if(requestUriBits.length < 5) {
-//			response.getWriter().append("올바른 요청이 아닙니다.");
-//			return;
-//		}
-//		
-//		String controllerName = requestUriBits[3]; // member, article 같은 부분
-//		String actionMethodName = requestUriBits[4]; // list.jsp 파일 같은 부분
-//		
-//		MysqlUtil.setDBInfo("127.0.0.1", "kjm", "1234", "jspCommunity");
-//		
-//		String jspPath = null;
 		if( controllerName.equals("home")) {
 			UsrHomeController homeController = Container.homeController;
 			
@@ -48,6 +31,12 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 		
 			if(actionMethodName.equals("list")) {
 				jspPath = memberController.showList(request, response); // memberController의 showList를 호출
+			}
+			else if(actionMethodName.equals("findLoginId")) {
+				jspPath = memberController.showFindLoginId(request, response); // memberController의 showList를 호출
+			}
+			else if(actionMethodName.equals("doFindLoginId")) {
+				jspPath = memberController.doFindLoginId(request, response); // memberController의 showList를 호출
 			}
 			else if(actionMethodName.equals("join")) {
 				jspPath = memberController.showJoin(request, response); // memberController의 showList를 호출
@@ -98,18 +87,6 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 		}
 		
 		return jspPath;
-//											
-//		MysqlUtil.closeConnection();
-//		
-//													//UriBits = /1/2/3/4
-//		RequestDispatcher rd = request.getRequestDispatcher("/jsp/" + jspPath +".jsp");
-//		rd.forward(request, response);
-//		
-//	}
-//	@Override
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		// TODO Auto-generated method stub
-//		doGet(request, response);
-//}
+
 	}
 }

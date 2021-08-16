@@ -155,4 +155,38 @@ public class UsrMemberController {
 		request.setAttribute("data", Util.getJsonText(rs));
 		return "common/pure";
 	}
+	// 아이디 찾기
+	public String showFindLoginId(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		if(session.getAttribute("loginedMemberId") != null) { // 로그아웃 상태인지 확인
+			request.setAttribute("alertMsg", "로그아웃 후 진행해주세요.");
+			request.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		
+		return "usr/member/findLoginId";
+	}
+	// 아이디 찾기
+	public String doFindLoginId(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		if(session.getAttribute("loginedMemberId") != null) { // 로그아웃 상태인지 확인
+			request.setAttribute("alertMsg", "로그아웃 후 진행해주세요.");
+			request.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+		
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");
+		
+		Member member = memberService.getMemberByNameAndEmail(name, email); // 아이디 중복검사
+		if(member == null) {
+			request.setAttribute("alertMsg", "일치하는 회원이 존재하지 않습니다.");
+			request.setAttribute("historyBack", true);
+			return "common/redirect";
+		}
+
+		request.setAttribute("alertMsg", String.format("아이디는 %s 입니다.", member.getLoginId()));
+		request.setAttribute("replaceUrl", "../member/login");
+		return "common/redirect";
+	}
 }
