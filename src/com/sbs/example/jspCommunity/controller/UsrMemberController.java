@@ -51,7 +51,7 @@ public class UsrMemberController {
 		}
 		
 		String loginId = request.getParameter("loginId");
-		String loginPw = request.getParameter("loginPw");
+		String loginPw = request.getParameter("loginPwReal"); // 57강. 암호화한 비밀번호로 수정
 		String name = request.getParameter("name");
 		String nickname = request.getParameter("nickname");
 		String email = request.getParameter("email");
@@ -108,7 +108,7 @@ public class UsrMemberController {
 		}
 		
 		String loginId = request.getParameter("loginId");
-		String loginPw = request.getParameter("loginPw");
+		String loginPw = request.getParameter("loginPwReal"); // 57강. 암호화한 비밀번호로 수정
 		
 		Member member = memberService.getMemberByLoginId(loginId); // 아이디 중복검사
 		if(member == null) {

@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="pageTitle" value="회원가입" />
 <%@ include file="../../part/head.jspf" %>
+<!-- 자바스크립트 임호화 라이브러리 cdnjs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 	<h1>${pageTitle}</h1>
 
 	<div>
@@ -93,11 +95,16 @@
 				form.cellphoneNo.focus(); // 알림창을 닫으면 바로 아이디 부분에 글을 쓸 수 있음
 			return;
 			}
+			form.loginPwReal.value = sha256(form.loginPw.value); // 사용자가 입력한 비밀번호를 암호화
+			form.loginPw.value = ""; // 사용자가 입력한 비밀번호
+			form.loginPwConfirm.value = ""; // 이걸 비워줘야 비밀번호가 안날라감
+		
 		form.submit();
 		DoJoinForm__submited = true;
 		}
 	</script> <!-- 여기서 this는 form 엘리먼트를 뜻함 -->
 		<form action="doJoin" method="post" onsubmit="DoJoinForm__submit(this); return false;">
+			<input type="hidden" name="loginPwReal" />
 			<div>
 				<div>아이디</div>
 				<div>
@@ -138,7 +145,7 @@
 			<hr />
 			<div>
 				<div>연락처</div>
-				<div><input type="number" name="cellphoneNo" maxlength="10" placeholder="연락처."/>
+				<div><input type="tel" name="cellphoneNo" maxlength="10" placeholder="연락처."/>
 				</div>
 			</div>
 			<hr />
