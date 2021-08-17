@@ -17,7 +17,7 @@
 		const form = $(el).closest('form').get(0); // 엘리먼트(el) 조상 중에서 가장 가까운 form을 찾아라
 		const loginId = form.loginId.value;
 		
-		$.get(
+		$.get(	
 			"getLoginIdDup", // 순수한 정보를 얻을 땐 get을 사용, 보는건 show, 처리하는건 do
 			{
 				//loginId: loginId 이렇게 적어도 되고 // 서로 다름 "loginId"(문자열) : loginId(const loginId)를 뜻함
@@ -28,8 +28,8 @@
 					alert(data.msg);
 				}
 				//data.resultCode를 자른다 앞에서부터 2자(S-)
-				if(data.resultCode.substr(0, 2) == "S-") {
-					DoJoinForm__checkedLoginId = data.loginId;
+				if(data.success) {
+					DoJoinForm__checkedLoginId = data.body.loginId;
 				}
 			},
 			"json"

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import com.sbs.example.jspCommunity.container.Container;
 import com.sbs.example.jspCommunity.dto.Board;
 import com.sbs.example.jspCommunity.dto.Member;
+import com.sbs.example.jspCommunity.dto.ResultData;
 import com.sbs.example.jspCommunity.service.MemberService;
 import com.sbs.example.util.Util;
 
@@ -132,11 +133,8 @@ public class UsrMemberController {
 	// 아이디 중복검사
 	public String getLoginIdDup(HttpServletRequest request, HttpServletResponse response) {
 		String loginId = request.getParameter("loginId");
-		
-		
+
 		Member member = memberService.getMemberByLoginId(loginId);
-		
-		Map<String, Object> rs = new HashMap<>();
 		
 		String resultCode = null; // 이런거 할 땐 널을 넣어주는게 좋음
 		String msg = null;
@@ -148,12 +146,9 @@ public class UsrMemberController {
 			resultCode ="S-1";
 			msg ="사용이 가능한 아이디 입니다.";
 		}
-		rs.put("resultCode", resultCode);
-		rs.put("msg", msg);
-		rs.put("loginId", loginId);
-		
-		request.setAttribute("data", Util.getJsonText(rs));
-		return "common/pure";
+
+		request.setAttribute("data", new ResultData(resultCode, msg, "loginId", loginId));
+		return "common/json";
 	}
 	// 아이디 찾기
 	public String showFindLoginId(HttpServletRequest request, HttpServletResponse response) {
@@ -224,17 +219,14 @@ public class UsrMemberController {
 				return "common/redirect";
 			}
 			// 임시 비밀번호 발송
-			Map<String, Object> sendTempLoginPwToEmailRs = memberService.sendTempLoginPwToEmail(member);
+			ResultData sendTempLoginPwToEmailRs = memberService.sendTempLoginPwToEmail(member);
 			
-			String resultCode = (String)sendTempLoginPwToEmailRs.get("resultCode");
-			String resultMsg = (String)sendTempLoginPwToEmailRs.get("msg");
-				
-			if(resultCode.startsWith("F-")) { // 발송 실패
-				request.setAttribute("alertMsg", resultMsg);
+			if(sendTempLoginPwToEmailRs.isFail()) { // 발송 실패한지 sendTempLoginPwToEmailRs에 물어봄
+				request.setAttribute("alertMsg", sendTempLoginPwToEmailRs.getMsg());
 				request.setAttribute("historyBack", true);
 				return "common/redirect";
 			}
-			request.setAttribute("alertMsg", resultMsg);
+			request.setAttribute("alertMsg", sendTempLoginPwToEmailRs.getMsg());
 			request.setAttribute("replaceUrl", "../member/login");
 			return "common/redirect";
 		}
