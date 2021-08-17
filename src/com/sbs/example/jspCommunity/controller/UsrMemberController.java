@@ -189,4 +189,46 @@ public class UsrMemberController {
 		request.setAttribute("replaceUrl", "../member/login");
 		return "common/redirect";
 	}
+	// 비밀번호 찾기
+		public String showFindLoginPw(HttpServletRequest request, HttpServletResponse response) {
+			HttpSession session = request.getSession();
+			if(session.getAttribute("loginedMemberId") != null) { // 로그아웃 상태인지 확인
+				request.setAttribute("alertMsg", "로그아웃 후 진행해주세요.");
+				request.setAttribute("historyBack", true);
+				return "common/redirect";
+			}
+			
+			return "usr/member/findLoginPw";
+		}
+		// 비밀번호 찾기
+		public String doFindLoginPw(HttpServletRequest request, HttpServletResponse response) {
+			HttpSession session = request.getSession();
+			if(session.getAttribute("loginedMemberId") != null) { // 로그아웃 상태인지 확인
+				request.setAttribute("alertMsg", "로그아웃 후 진행해주세요.");
+				request.setAttribute("historyBack", true);
+				return "common/redirect";
+			}
+			
+			String loginId = request.getParameter("loginId");
+			String email = request.getParameter("email");
+			
+			Member member = memberService.getMemberByLoginId(loginId);
+			if(member == null) { // 작성한 아이디 유무 확인
+				request.setAttribute("alertMsg", "일치하는 회원이 존재하지 않습니다.");
+				request.setAttribute("historyBack", true);
+				return "common/redirect";
+			}
+			if(member.getEmail().equals(email) == false) {
+				request.setAttribute("alertMsg", "일치하는 이메일이 존재하지 않습니다.");
+				request.setAttribute("historyBack", true);
+				return "common/redirect";
+			}
+			// 임시 비밀번호 발송
+			memberService.sendTempLoginPwToEmail(member);
+			
+			request.setAttribute("alertMsg", String.format("임시 패스워드가 %s (으)로 발송되었습니다.", member.getEmail()));
+			request.setAttribute("replaceUrl", "../member/login");
+			return "common/redirect";
+		}
+	
 }
