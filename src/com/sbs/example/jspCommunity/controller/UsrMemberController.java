@@ -224,9 +224,17 @@ public class UsrMemberController {
 				return "common/redirect";
 			}
 			// 임시 비밀번호 발송
-			memberService.sendTempLoginPwToEmail(member);
+			Map<String, Object> sendTempLoginPwToEmailRs = memberService.sendTempLoginPwToEmail(member);
 			
-			request.setAttribute("alertMsg", String.format("임시 패스워드가 %s (으)로 발송되었습니다.", member.getEmail()));
+			String resultCode = (String)sendTempLoginPwToEmailRs.get("resultCode");
+			String resultMsg = (String)sendTempLoginPwToEmailRs.get("msg");
+				
+			if(resultCode.startsWith("F-")) { // 발송 실패
+				request.setAttribute("alertMsg", resultMsg);
+				request.setAttribute("historyBack", true);
+				return "common/redirect";
+			}
+			request.setAttribute("alertMsg", resultMsg);
 			request.setAttribute("replaceUrl", "../member/login");
 			return "common/redirect";
 		}
