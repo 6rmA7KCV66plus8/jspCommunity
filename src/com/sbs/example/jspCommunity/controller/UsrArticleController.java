@@ -27,8 +27,10 @@ public class UsrArticleController {
 		Board board = articleService.getBoardById(boardId); // 게시물리스트에 게시판 이름 표시
 		request.setAttribute("board", board);
 		
+		int totalCount = articleService.getArticlesCountByBoardId(boardId);
 		List<Article> articles = articleService.getForPrintArticlesByBoardId(boardId);
 		
+		request.setAttribute("totalCount", totalCount);
 		request.setAttribute("articles", articles);
 		
 		return "usr/article/list";
