@@ -6,13 +6,60 @@
 <%@ include file="../../part/head.jspf" %>
 	<h1>${pageTitle}</h1>
 	
+	<hr />
+	
 	<div>
 		<a href="write?boardId=${param.boardId}">게시물 작성</a>
 	</div>
 	
+	<hr />
+	
+	<div>
+		<script>
+		let DoSearchForm__submited = false; // 중복  작성 방지
+		function DoSearchForm__submit(form){
+			if(DoSearchForm__submited){
+				alert('처리중 입니다.');
+				return;
+			}
+			
+			form.searchKeyword.value = form.searchKeyword.value.trim(); // 공백 처리
+
+			if(form.searchKeyword.value.length == 0 ){
+				alert('검색어를 입력해주세요.');
+				form.searchKeyword.focus();
+				return;
+				}
+			form.submit();
+			DoSearchForm__submited = true;
+		}
+		</script>
+		<form action="" onsubmit="DoSearchForm__submit(this); return false;">
+			<input type="hidden" name="boardId" value="${param.boardId}" />
+			
+			<select name="searchKeywordType" >
+				<option value="title">제목</option>
+				<option value="body">내용</option>
+			</select>
+			<script>
+			const param__searchKeywordType = '${param.searchKeywordType}';
+			if(param__searchKeywordType){
+				$('select[name="searchKeywordType"]').val('${param.searchKeywordType}');	
+			}
+			</script>
+			<input value="${param.searchKeyword}" type="text" name="searchKeyword" placeholder="검색어를 입력해주세요." />
+			<input type="submit" value="검색" />
+		</form>
+	</div>
+	
+	<hr />
+	
 	<div>
 		총 게시물 수 : ${totalCount}
 	</div>
+	
+	<hr />
+	
 	<c:forEach items="${articles}" var="article">
 	<div>
 		번호 : 
