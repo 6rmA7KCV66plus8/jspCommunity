@@ -11,7 +11,7 @@ import com.sbs.example.mysqlutil.SecSql;
 
 public class ArticleDao {
 
-	public List<Article> getForPrintArticlesByBoardId(int boardId) {
+	public List<Article> getForPrintArticlesByBoardId(int boardId, String searchKeyword, String searchKeywordType) {
 		List<Article> articles = new ArrayList<>();
 		
 		SecSql sql = new SecSql();
@@ -26,6 +26,18 @@ public class ArticleDao {
 		sql.append("ON A.boardId = B.id");
 		if(boardId != 0) {
 			sql.append("WHERE A.boardId = ?", boardId);
+		}
+		
+		if(searchKeyword != null) {
+			if(searchKeywordType == null || searchKeywordType.equals("title")) { // 제목에서 검색
+				sql.append("AND A.title LIKE CONCAT('%', ? '%')", searchKeyword);
+			}
+			else if(searchKeywordType.equals("body")) {
+				sql.append("AND A.body LIKE CONCAT('%', ? '%')", searchKeyword); // 내용에서 검색
+			}
+			else if(searchKeywordType.equals("titleAndbody")) {
+				sql.append("AND (A.title LIKE CONCAT('%', ? '%') OR A.body LIKE CONCAT('%', ? '%'))", searchKeyword, searchKeyword); // 제목+내용에서 검색
+			}
 		}
 		sql.append("ORDER BY A.id DESC");
 //		System.out.println("sql.getRawSql() : " + sql.getRawSql()); // getRawSql : 최종 형태의 쿼리를 출력할 수 있음
@@ -127,13 +139,28 @@ public class ArticleDao {
 		return MysqlUtil.update(sql);
 	}
 
-	public int getArticlesCountByBoardId(int boardId) {
+	public int getArticlesCountByBoardId(int boardId, String searchKeyword, String searchKeywordType) {
 		SecSql sql = new SecSql();
 		sql.append("SELECT COUNT(*) AS cnt");
 		sql.append("FROM article AS A");
+		sql.append("WHERE 1"); // 실행되어야 할 부분이 2개(boardId, searchKeyword)일 땐 이렇게 sql문을 작성하는게 좋음
+		
 		if(boardId != 0) {
-			sql.append("WHERE A.boardId = ?", boardId);
+			sql.append("AND A.boardId = ?", boardId);
 		}
+		
+		if(searchKeyword != null) {
+			if(searchKeywordType == null || searchKeywordType.equals("title")) { // 제목에서 검색
+				sql.append("AND A.title LIKE CONCAT('%', ? '%')", searchKeyword);
+			}
+			else if(searchKeywordType.equals("body")) {
+				sql.append("AND A.body LIKE CONCAT('%', ? '%')", searchKeyword); // 내용에서 검색
+			}
+			else if(searchKeywordType.equals("titleAndbody")) {
+				sql.append("AND (A.title LIKE CONCAT('%', ? '%') OR A.body LIKE CONCAT('%', ? '%'))", searchKeyword, searchKeyword); // 제목+내용에서 검색
+			}
+		}
+		
 		return MysqlUtil.selectRowIntValue(sql);
 	}
 

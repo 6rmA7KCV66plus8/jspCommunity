@@ -22,13 +22,16 @@ public class UsrArticleController {
 	}
 	public String showList(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
+		String searchKeyword = request.getParameter("searchKeyword");
+		String searchKeywordType = request.getParameter("searchKeywordType");
+		
 		int boardId = Integer.parseInt(request.getParameter("boardId"));
 		
 		Board board = articleService.getBoardById(boardId); // 게시물리스트에 게시판 이름 표시
 		request.setAttribute("board", board);
 		
-		int totalCount = articleService.getArticlesCountByBoardId(boardId);
-		List<Article> articles = articleService.getForPrintArticlesByBoardId(boardId);
+		int totalCount = articleService.getArticlesCountByBoardId(boardId, searchKeyword, searchKeywordType);
+		List<Article> articles = articleService.getForPrintArticlesByBoardId(boardId, searchKeyword, searchKeywordType);
 		
 		request.setAttribute("totalCount", totalCount);
 		request.setAttribute("articles", articles);

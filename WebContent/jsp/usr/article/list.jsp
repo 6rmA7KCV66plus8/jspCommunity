@@ -37,7 +37,8 @@
 		<form action="" onsubmit="DoSearchForm__submit(this); return false;">
 			<input type="hidden" name="boardId" value="${param.boardId}" />
 			
-			<select name="searchKeywordType" >
+			<select name="searchKeywordType">
+				<option value="titleAndbody">제목+내용</option>
 				<option value="title">제목</option>
 				<option value="body">내용</option>
 			</select>

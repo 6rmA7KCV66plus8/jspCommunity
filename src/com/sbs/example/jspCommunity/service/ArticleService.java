@@ -16,10 +16,6 @@ public class ArticleService {
 		articleDao = Container.articleDao;
 	}
 
-	public List<Article> getForPrintArticlesByBoardId(int boardId) { // 출력을 위한 부분
-		return articleDao.getForPrintArticlesByBoardId(boardId);
-		
-	}
 
 	public Article getForPrintArticleById(int id) {
 		// TODO Auto-generated method stub
@@ -46,8 +42,13 @@ public class ArticleService {
 		return articleDao.modify(args);
 	}
 
-	public int getArticlesCountByBoardId(int boardId) {
-		return articleDao.getArticlesCountByBoardId(boardId);
+
+	public int getArticlesCountByBoardId(int boardId, String searchKeyword, String searchKeywordType) {
+		return articleDao.getArticlesCountByBoardId(boardId, searchKeyword, searchKeywordType);
+	}
+
+	public List<Article> getForPrintArticlesByBoardId(int boardId, String searchKeyword, String searchKeywordType) {
+		return articleDao.getForPrintArticlesByBoardId(boardId, searchKeyword, searchKeywordType);
 	}
 
 
