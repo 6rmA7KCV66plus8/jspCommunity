@@ -29,7 +29,7 @@
 			const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
 			const body = editor.getMarkdown().trim();
 
-			if( body.length == 0) {
+			if(body.length == 0) {
 				alert('내용을 입력해주세요.');
 				editor.focus();
 
@@ -42,12 +42,11 @@
 		DoModifyForm__submited = true;
 		}
 	</script>
-		<form action="doModify" method="post">
+		<form action="doModify" method="post" onsubmit="DoModifyForm__submit(this); return false;">
 			<input type="hidden" name="id" value="${article.id}"/>
 			<input type="hidden" name="body" />
 				<div>제목</div>
 				<div><input type="text" name="title" maxlength="50" placeholder="제목" value="${article.title}"/></div>
-			</div>
 			<hr />
 			<div>
 				<div>내용</div>
