@@ -130,3 +130,9 @@ ALTER TABLE `member` CHANGE `loginId` `loginId` CHAR(50) NOT NULL AFTER `updateD
 
 # adminLebel을 authLevel로 컬럼명 변경   
 ALTER TABLE `member` CHANGE `adminLevel` `authLevel` TINYINT UNSIGNED DEFAULT 2 NOT NULL COMMENT '0=탈퇴/1=정지/2=일반/3=인증/4=관리자'; 
+
+
+# 기존회원의 비밀번호를 암호화
+UPDATE `member` SET loginPw = SHA2(loginPw, 256);
+
+WHERE id < 8; 이건 아이디 번호가 8 이하인 아이디만 적용
