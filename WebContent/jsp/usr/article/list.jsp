@@ -80,4 +80,37 @@
 		<hr />
 	</div>
 	</c:forEach>
+	
+<style>
+.red{
+	color : red;
+}
+</style>
+
+	<div class="con">
+	<!--
+		<c:set var="aUrl" value="?page=1&boardId=${param.boardId}&serchKeywordType=${param.searchKeywordType}&serchKeyword=${param.searchKeyword}" />
+		<a href="${aUrl}">◀◀</a> // 1페이지로
+	 -->
+		
+		<c:if test="${pageBoxStartBeforeBtnNeedToShow}">
+			<c:set var="aUrl" value="?page=${pageBoxStartBeforePage}&boardId=${param.boardId}&serchKeywordType=${param.searchKeywordType}&serchKeyword=${param.searchKeyword}" />
+			<a href="${aUrl}">◀</a> <!-- 10 단위로 이전 페이지 -->
+		</c:if>
+		
+		<c:forEach var="i" begin="${pageBoxStartPage}" end="${pageBoxEndPage}" step="1"> <!-- 번수: i, 1부터 페이지 끝까지 1페이지씩 증가 -->
+			<c:set var="aClass" value="${page == i ? 'red' : ''}" />
+			<c:set var="aUrl" value="?page=${i}&boardId=${param.boardId}&serchKeywordType=${param.searchKeywordType}&serchKeyword=${param.searchKeyword}" />
+			<a class="${aClass}" href="${aUrl}">${i}</a>
+		</c:forEach>
+		
+		<c:if test="${pageBoxEndAfterBtnNeedToShow}">
+			<c:set var="aUrl" value="?page=${pageBoxEndAfterPage}&boardId=${param.boardId}&serchKeywordType=${param.searchKeywordType}&serchKeyword=${param.searchKeyword}" />
+			<a href="${aUrl}">▶</a> <!-- 10 단위로 다음 페이지 -->
+		</c:if>
+		
+	<!-- <c:set var="aUrl" value="?page=${totalPage}&boardId=${param.boardId}&serchKeywordType=${param.searchKeywordType}&serchKeyword=${param.searchKeyword}" />
+		<a href="${aUrl}">▶▶</a> // 마지막 페이지로
+	-->
+	</div>
 <%@ include file="../../part/foot.jspf" %>
