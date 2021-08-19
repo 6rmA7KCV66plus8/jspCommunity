@@ -12,6 +12,7 @@ import com.sbs.example.jspCommunity.container.Container;
 import com.sbs.example.jspCommunity.dto.Article;
 import com.sbs.example.jspCommunity.dto.Board;
 import com.sbs.example.jspCommunity.service.ArticleService;
+import com.sbs.example.util.Util;
 
 public class UsrArticleController {
 
@@ -24,14 +25,18 @@ public class UsrArticleController {
 		// TODO Auto-generated method stub
 		String searchKeyword = request.getParameter("searchKeyword");
 		String searchKeywordType = request.getParameter("searchKeywordType");
-		
+		int page = Util.getAsInt(request.getParameter("page"), 1); // 페이지를 받는 부분
+		// req.para(page)의 값이 null, 소수점, Long타입, 한글, 등 이어도 1
+		int itemsInAPage = 30; // 게시판에 한 페이지당 몇개의 게시물을 보여주는지
+		int limitStart = (page -1) * itemsInAPage; // 페이지가 1 페이지 일떄, 30개씩 건너뜀
+				
 		int boardId = Integer.parseInt(request.getParameter("boardId"));
 		
 		Board board = articleService.getBoardById(boardId); // 게시물리스트에 게시판 이름 표시
 		request.setAttribute("board", board);
 		
 		int totalCount = articleService.getArticlesCountByBoardId(boardId, searchKeyword, searchKeywordType);
-		List<Article> articles = articleService.getForPrintArticlesByBoardId(boardId, searchKeyword, searchKeywordType);
+		List<Article> articles = articleService.getForPrintArticlesByBoardId(boardId, limitStart, itemsInAPage, searchKeyword, searchKeywordType);
 		
 		request.setAttribute("totalCount", totalCount);
 		request.setAttribute("articles", articles);

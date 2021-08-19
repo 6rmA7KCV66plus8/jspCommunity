@@ -111,5 +111,24 @@ public class Util {
 			return "";
 		} 
 	}
+
+	public static int getAsInt(Object value, int defaultValue) {
+		if( value instanceof Integer) { // value가 instanceof Integer 형태이다
+			return (int)value; // int로 형변환을 하면 된다
+		} else if( value instanceof Long) { // value가 instanceof Long 형태이다
+			return Long.valueOf((long)value).intValue(); // int로 형변환을 하면 된다
+		} else if( value instanceof Float) { // value가 instanceof Float 형태이다
+			return Float.valueOf((float)value).intValue(); // int로 형변환을 하면 된다
+		} else if( value instanceof Double) { // value가 instanceof Double 형태이다
+			return Double.valueOf((double)value).intValue(); // int로 형변환을 하면 된다
+		} else if( value instanceof String) { // value가 instanceof String 형태이다
+			try {
+			return Integer.parseInt((String)value); // int로 형변환을 하면 된다
+			} catch ( NumberFormatException e) {	
+			}
+		}
+		
+		return defaultValue;
+	}
 	
 }
