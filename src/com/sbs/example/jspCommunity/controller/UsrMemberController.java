@@ -230,5 +230,36 @@ public class UsrMemberController {
 			request.setAttribute("replaceUrl", "../member/login");
 			return "common/redirect";
 		}
+		public String showModify(HttpServletRequest request, HttpServletResponse response) {
+			return "usr/member/modify";
+		}
+		public String doModify(HttpServletRequest request, HttpServletResponse response) {
+			int loginedMemberId = (int)request.getAttribute("loginedMemberId"); // 아이디 값을 받아옴
+			
+			String loginPw = (String)request.getParameter("loginPwReal");
+			
+			if( loginPw != null && loginPw.length() == 0) { // 입력한 패스워드 값이 null이 아닌데 길이가 0(입력을 안함)이면 
+				loginPw = null; // 패스워드는 null;
+			}
+			String name = (String)request.getParameter("name");
+			String nickname = (String)request.getParameter("nickname");
+			String email = (String)request.getParameter("email");
+			String cellphoneNo = (String)request.getParameter("cellphoneNo");
+			
+			
+			Map<String, Object> modifyParam = new HashMap<>();
+			modifyParam.put("loginPw", loginPw);
+			modifyParam.put("name", name);
+			modifyParam.put("nickname", nickname);
+			modifyParam.put("email", email);
+			modifyParam.put("cellphoneNo", cellphoneNo);
+			modifyParam.put("id", loginedMemberId);
+			
+			memberService.modify(modifyParam);
+			
+			request.setAttribute("alertMsg", "정보수정이 완료 되었습니다.");
+			request.setAttribute("replaceUrl", "../home/main");
+			return "common/redirect";
+		}
 	
 }

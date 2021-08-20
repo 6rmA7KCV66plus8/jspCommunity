@@ -44,6 +44,12 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 			else if(actionMethodName.equals("doFindLoginPw")) {
 				jspPath = memberController.doFindLoginPw(request, response); // memberController의 showList를 호출
 			}
+			else if(actionMethodName.equals("modify")) {
+				jspPath = memberController.showModify(request, response); // memberController의 showList를 호출
+			}
+			else if(actionMethodName.equals("doModify")) {
+				jspPath = memberController.doModify(request, response); // memberController의 showList를 호출
+			}
 			else if(actionMethodName.equals("join")) {
 				jspPath = memberController.showJoin(request, response); // memberController의 showList를 호출
 			}

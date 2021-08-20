@@ -97,6 +97,8 @@ public abstract class DispatcherServlet extends HttpServlet {
 		
 		// 로그인을 해야 들어갈 수 있는 부분들
 		needToLoginActionUrls.add("/usr/member/doLogout");
+		needToLoginActionUrls.add("/usr/member/modify");
+		needToLoginActionUrls.add("/usr/member/doModify");
 		needToLoginActionUrls.add("/usr/article/write");
 		needToLoginActionUrls.add("/usr/article/doWrite");
 		needToLoginActionUrls.add("/usr/article/modify");
@@ -113,15 +115,19 @@ public abstract class DispatcherServlet extends HttpServlet {
 			}
 		}
 		// 로그아웃 필요 인터셉터 시작
-		List<String> needToGoloutActionUrls = new ArrayList<>();
+		List<String> needToLogoutActionUrls = new ArrayList<>();
 		
 		// 로그아웃을 해야 들어갈 수 있는 부분들
-		needToGoloutActionUrls.add("/usr/member/login");
-		needToGoloutActionUrls.add("/usr/member/doLogin");
-		needToGoloutActionUrls.add("/usr/member/join");
-		needToGoloutActionUrls.add("/usr/member/doJoin");
+		needToLogoutActionUrls.add("/usr/member/login");
+		needToLogoutActionUrls.add("/usr/member/doLogin");
+		needToLogoutActionUrls.add("/usr/member/join");
+		needToLogoutActionUrls.add("/usr/member/doJoin");
+		needToLogoutActionUrls.add("/usr/member/findLoginId");
+		needToLogoutActionUrls.add("/usr/member/dofindLoginId");
+		needToLogoutActionUrls.add("/usr/member/findLoginPw");
+		needToLogoutActionUrls.add("/usr/member/dofindLoginPw");
 		
-		if(needToGoloutActionUrls.contains(actionUrl)) { // 내가 이동하려는 곳이 리스트 4곳이면
+		if(needToLogoutActionUrls.contains(actionUrl)) { // 내가 이동하려는 곳이 리스트 4곳이면
 			if((boolean)request.getAttribute("isLogined")) { // 로그인이 되어있음
 				request.setAttribute("alertMsg", "로그아웃을 해주세요.");
 				request.setAttribute("historyBack", true);
