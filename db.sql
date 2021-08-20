@@ -136,3 +136,29 @@ ALTER TABLE `member` CHANGE `adminLevel` `authLevel` TINYINT UNSIGNED DEFAULT 2 
 UPDATE `member` SET loginPw = SHA2(loginPw, 256);
 
 WHERE id < 8; 이건 아이디 번호가 8 이하인 아이디만 적용
+
+
+# 71강 attr 추가 
+# 부가정보테이블 
+# 댓글 테이블 추가
+CREATE TABLE attr (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    `relTypeCode` CHAR(20) NOT NULL, #관련 타입 코드, 회원에 관한 정보는 member가 들어가고 게시물은 article이 들어간다
+    `relId` INT(10) UNSIGNED NOT NULL, # 관련 데이터 번호, 
+    `typeCode` CHAR(30) NOT NULL, # 카테고리 extra__같은거
+    `type2Code` CHAR(30) NOT NULL, #카테고리 isTempPasswordUsing 같은거
+    `value` TEXT NOT NULL # 값인데 1 또는 0이 들어감
+);
+
+# attr 유니크 인덱스 걸기
+## 중복변수 생성금지
+## 변수찾는 속도 최적화
+ALTER TABLE `attr` ADD UNIQUE INDEX (`relTypeCode`, `relId`, `typeCode`, `type2Code`); # 변수는 똑같은 이름이 2개이상 존재하면 안되서 unique 제약을 걸어둠
+
+## 특정 조건을 만족하는 회원 또는 게시물(기타 데이터)를 빠르게 찾기 위해서
+ALTER TABLE `attr` ADD INDEX (`relTypeCode`, `typeCode`, `type2Code`);
+
+# attr에 만료날짜 추가
+ALTER TABLE `attr` ADD COLUMN `expireDate` DATETIME NULL AFTER `value`; #expireDate : 만료 날짜를 구현할 수 있다
