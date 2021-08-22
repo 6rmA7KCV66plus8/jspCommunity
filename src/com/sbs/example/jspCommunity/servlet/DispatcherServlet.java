@@ -92,6 +92,17 @@ public abstract class DispatcherServlet extends HttpServlet {
 		
 		// 데이터 추가 인터셉터 끝
 		
+		String currentUrl = request.getRequestURI();
+		
+		if(request.getQueryString() != null) {
+			currentUrl += "?" + request.getQueryString();
+		}
+		
+		String encodedCurrentUrl = Util.getUrlEncoded(currentUrl);
+		
+		request.setAttribute("currentUrl", currentUrl);
+		request.setAttribute("encodedCurrentUrl", encodedCurrentUrl);
+		
 		// 로그인 필요 필터링 인터셉터 시작
 		List<String> needToLoginActionUrls = new ArrayList<>();
 		
@@ -108,7 +119,7 @@ public abstract class DispatcherServlet extends HttpServlet {
 		if(needToLoginActionUrls.contains(actionUrl)) { // 내가 이동하려는 곳이 리스트 6곳이면
 			if((boolean)request.getAttribute("isLogined") == false) { // 로그인이 안되어있음
 				request.setAttribute("alertMsg", "로그인을 해주세요.");
-				request.setAttribute("replaceUrl", "../member/login");
+				request.setAttribute("replaceUrl", "../member/login?afterLoginUrl=" + encodedCurrentUrl);
 				
 				RequestDispatcher rd = request.getRequestDispatcher("/jsp/common/redirect.jsp");
 				rd.forward(request, response);

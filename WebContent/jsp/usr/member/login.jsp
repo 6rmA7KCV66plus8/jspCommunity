@@ -36,6 +36,7 @@
 	</script> <!-- 여기서 this는 form 엘리먼트를 뜻함 -->
 		<form action="doLogin" method="post" onsubmit="DoLoginForm__submit(this); return false;">
 			<input type="hidden" name="loginPwReal" />
+			<input type="hidden" name="afterLoginUrl" value="${param.afterLoginUrl}" /> <!-- post전송이라 엔코딩 안해도 됌 -->
 			<div>
 				<div>아이디</div>
 				<div><input type="text" name="loginId" maxlength="50" placeholder="사용할 아이디를 입력해주세요."/></div>
