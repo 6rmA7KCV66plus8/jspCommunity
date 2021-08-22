@@ -77,8 +77,16 @@ public class MemberService {
 		modifyParam.put("id", actor.getId());
 		modifyParam.put("loginPw", Util.sha256(tempPassword));
 		modify(modifyParam);
-		
-		attrService.setValue("member__" + actor.getId() + "__extra__isUsingTempPassword", "1", null);
+	
+		setIsUsingTempPassword(actor.getId(), true);
+	}
+
+	public void setIsUsingTempPassword(int actorId, boolean use) {
+		attrService.setValue("member__" + actorId + "__extra__isUsingTempPassword", use, null);
+	}
+	
+	public boolean getIsUsingTempPassword(int actorId) {
+		return attrService.getValueAsBoolean("member__" + actorId + "__extra__isUsingTempPassword");
 	}
 
 	public void modify(Map<String, Object> param) {

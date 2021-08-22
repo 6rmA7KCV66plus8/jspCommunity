@@ -102,6 +102,7 @@ public class UsrMemberController {
 	
 	public String doLogin(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
+		
 		if(session.getAttribute("loginedMemberId") != null) {
 			request.setAttribute("alertMsg", "로그아웃 후 진행해주세요.");
 			request.setAttribute("historyBack", true);
@@ -125,8 +126,18 @@ public class UsrMemberController {
 		//로그인 처리
 		session.setAttribute("loginedMemberId", member.getId());
 
-		request.setAttribute("alertMsg", String.format("%s님 환영합니다.", member.getNickname()));
-		request.setAttribute("replaceUrl", "../home/main");
+		boolean IsUsingTempPassword = memberService.getIsUsingTempPassword(member.getId());
+		
+		String alertMsg = String.format("%s님 환영합니다.", member.getNickname());
+		String replaceUrl = "../home/main";
+				
+		if(IsUsingTempPassword) {
+			alertMsg = String.format("%s님은 현재 임시 비밀번호를 사용중 입니다. 비밀번호를 변경 후 이용해주세요.", member.getNickname());
+			replaceUrl = "../member/modify";
+		}
+		
+		request.setAttribute("alertMsg", alertMsg);
+		request.setAttribute("replaceUrl", replaceUrl);
 		return "common/redirect";
 	}
 	
@@ -256,6 +267,10 @@ public class UsrMemberController {
 			modifyParam.put("id", loginedMemberId);
 			
 			memberService.modify(modifyParam);
+			
+			if(loginPw != null) {
+				memberService.setIsUsingTempPassword(loginedMemberId, false);
+			}
 			
 			request.setAttribute("alertMsg", "정보수정이 완료 되었습니다.");
 			request.setAttribute("replaceUrl", "../home/main");
