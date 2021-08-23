@@ -28,7 +28,11 @@ public class MemberService {
 	}
 
 	public int join(Map<String, Object> args) {
-		return memberDao.join(args);
+		int id = memberDao.join(args);
+		
+		setLoginPwModifiedNow(id);
+		
+		return id;
 	}
 
 	public Member getMemberByLoginId(String loginId) {
@@ -85,11 +89,41 @@ public class MemberService {
 		attrService.setValue("member__" + actorId + "__extra__isUsingTempPassword", use, null);
 	}
 	
-	public boolean getIsUsingTempPassword(int actorId) {
+	public boolean isUsingTempPassword(int actorId) {
 		return attrService.getValueAsBoolean("member__" + actorId + "__extra__isUsingTempPassword");
 	}
 
 	public void modify(Map<String, Object> param) {
+		if(param.get("loginPw") != null) {
+			setLoginPwModifiedNow((int)param.get("id"));
+		}
+		
 		memberDao.modify(param); // memberDao 한테 param을 넘김
 	}
+
+	private void setLoginPwModifiedNow(int actorId) {
+		attrService.setValue("member__" + actorId + "__extra__loginPwModifiedDate", Util.getNowDateStr(), null);
+
+	}
+	
+	public int getOldPasswordDays() {
+		return 90;
+	}
+	public boolean isNeedToModifyOldLoginPw(int actorId) {
+		String date = attrService.getValue("member__" + actorId + "__extra__loginPwModifiedDate");
+		
+		if(Util.isEmpty(date)) { // attr은 값이 없으면 널이 아니라 공백을 return함 , attrService line:52 참조
+			return true;
+		}
+		
+		int pass = Util.getPassedSecondsFrom(date);
+		
+		int getOldPasswordDays = getOldPasswordDays();
+		
+		if( pass > getOldPasswordDays * 60 * 60 * 24) { // 1분, 1시간 , 24시간
+			return true;
+		}
+	return false;
+	}
+
 }

@@ -114,8 +114,6 @@ public class UsrMemberController extends Controller {
 		//로그인 처리
 		session.setAttribute("loginedMemberId", member.getId());
 
-		boolean IsUsingTempPassword = memberService.getIsUsingTempPassword(member.getId());
-		
 		String alertMsg = String.format("%s님 환영합니다.", member.getNickname());
 		String replaceUrl = "../home/main";
 			// empty : 값이 없다 == false : 값이 있다
@@ -123,8 +121,18 @@ public class UsrMemberController extends Controller {
 			replaceUrl = request.getParameter("afterLoginUrl");
 		}
 		
-		if(IsUsingTempPassword) {
+		boolean isUsingTempPassword = memberService.isUsingTempPassword(member.getId());
+		
+		if(isUsingTempPassword) {
 			alertMsg = String.format("%s님은 현재 임시 비밀번호를 사용중 입니다. 비밀번호를 변경 후 이용해주세요.", member.getNickname());
+			replaceUrl = "../member/modify";
+		}
+		
+		boolean isNeedToModifyOldLoginPw = memberService.isNeedToModifyOldLoginPw(member.getId());
+		
+		if(isNeedToModifyOldLoginPw) {
+			int oldPasswordDays = memberService.getOldPasswordDays();
+			alertMsg = String.format("마지막 비밀번호 변경일로부터 " + oldPasswordDays + "일이 경과했습니다. 비밀번호를 변경해주세요.", member.getNickname());
 			replaceUrl = "../member/modify";
 		}
 		
