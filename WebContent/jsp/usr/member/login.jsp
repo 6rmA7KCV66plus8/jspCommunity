@@ -77,12 +77,11 @@
               </td>
             </tr>
             <tr>
-              <th>
-              </th>
+              <th></th>
               <td>
                 <div>
                   <div class="btn-wrap">
-                    <input type="submit" value="로그인" class="btn btn-success" />
+                    <input type="submit" value="로그인" class="btn primary" />
 					<button type="button" class="btn btn-info" onclick="history.back();">취소</button>
                   </div>
                 </div>

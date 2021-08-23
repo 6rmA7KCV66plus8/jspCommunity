@@ -1,13 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="pageTitle" value="회원가입" />
-<%@ include file="../../part/head.jspf" %>
+<%@ include file="../../part/head.jspf"%>
 <!-- 자바스크립트 임호화 라이브러리 cdnjs -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
-	<h1>${pageTitle}</h1>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 
-	<div>
+<div class="title-bar padding-0-10 con-min-width">
+	<h1 class="con">
+		<span><i class="fas fa-user-plus"></i></span> <span>${pageTitle}</span>
+	</h1>
+</div>
+
+<div class="join-form-box form-box padding-0-10 con-min-width">
 	<script>
 	let DoJoinForm__submited = false; // 중복  작성 방지
 	let DoJoinForm__checkedLoginId = "";
@@ -102,62 +108,105 @@
 		form.submit();
 		DoJoinForm__submited = true;
 		}
-	</script> <!-- 여기서 this는 form 엘리먼트를 뜻함 -->
-		<form action="doJoin" method="post" onsubmit="DoJoinForm__submit(this); return false;">
-			<input type="hidden" name="loginPwReal" />
-			<div>
-				<div>아이디</div>
-				<div>
-				<input type="text" name="loginId" maxlength="50" placeholder="사용할 아이디를 입력해주세요." />
-				<button type="button" onclick="DoJoinForm__checkLoginIdDup(this);" name="btnLoginIdDupCheck">중복체크</button>
-				</div><!-- 여기있는 this는 <button을 말함 -->
-			</div>
-			<hr />
-			<div>
-				<div>비밀번호</div>
-				<div><input type="password" name="loginPw" maxlength="50" placeholder="비밀번호" />
-				</div>
-			</div>
-			<hr />
-			<div>
-				<div>비밀번호 확인</div>
-				<div><input type="password" name="loginPwConfirm" maxlength="50" placeholder="비밀번호 확인" />
-				</div>
-			</div>
-			<hr />
-			<div>
-				<div>이름</div>
-				<div><input type="text" name="name" maxlength="50" placeholder="이름." />
-				</div>
-			</div>
-			<hr />
-			<div>
-				<div>닉네임</div>
-				<div><input type="text" name="nickname" maxlength="50" placeholder="닉네임." />
-				</div>
-			</div>
-			<hr />
-			<div>
-				<div>이메일</div>
-				<div><input type="email" name="email" maxlength="100" placeholder="이메일." />
-				</div>
-			</div>
-			<hr />
-			<div>
-				<div>연락처</div>
-				<div><input type="tel" name="cellphoneNo" maxlength="10" placeholder="연락처."/>
-				</div>
-			</div>
-			<hr />
-			<div>
-				<div>가입</div>
-				<div>
-					<input type="submit" value="완료" />
-					<button type="button" onclick="history.back();">취소</button>
-				</div>
-			</div>
-		</form>
-	</div>
+	</script>
+	<!-- 여기서 this는 form 엘리먼트를 뜻함 -->
+	<form class="con" action="doJoin" method="post"
+		onsubmit="DoJoinForm__submit(this); return false;">
+		<input type="hidden" name="loginPwReal" />
+		<table>
+			<colgroup>
+				<col width="150">
+			</colgroup>
+			<tbody>
+				<tr>
+					<th><span>아이디</span></th>
+					<td>
+						<div>
+							<input type="text" name="loginId" maxlength="50"
+								placeholder="사용할 아이디를 입력해주세요." />
+							<button class="btn btn-primary"
+								onclick="DoJoinForm__checkLoginIdDup(this);"
+								name="btnLoginIdDupCheck" type="button">중복체크</button>
+							<!-- 여기있는 this는 <button을 말함 -->
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th><span>비밀번호</span></th>
+					<td>
+						<div>
+							<input type="password" name="loginPw" maxlength="50"
+								placeholder="비밀번호를 입력해주세요" />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th><span>비밀번호 확인</span></th>
+					<td>
+						<div>
+							<input type="password" name="loginPwConfirm" maxlength="50"
+								placeholder="비밀번호를 입력해주세요" />
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<th><span>이름</span></th>
+					<td>
+						<div>
+							<input type="text" name="name" maxlength="50"
+								placeholder="이름을 입력해주세요" />
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<th><span>닉네임</span></th>
+					<td>
+						<div>
+							<input type="text" name="nickname" maxlength="50"
+								placeholder="닉네임을 입력해주세요" />
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<th><span>이메일</span></th>
+					<td>
+						<div>
+							<input type="email" name="email" maxlength="100"
+								placeholder="이메일을 입력해주세요" />
+						</div>
+
+					</td>
+				</tr>
+
+				<tr>
+					<th><span>연락처</span></th>
+					<td>
+						<div>
+							<input type="tel" name="cellphoneNo" maxlength="10"
+								placeholder="연락처를 입력해주세요" />
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+				<th></th>
+					<td>
+						<div>
+							 <div class="btn-wrap">
+								<input class="btn btn-primary" type="submit" value="완료" />
+								<button class="btn btn-info" type="button"
+									onclick="history.back();">취소</button>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</div>
 
 
-<%@ include file="../../part/foot.jspf" %>
+<%@ include file="../../part/foot.jspf"%>
