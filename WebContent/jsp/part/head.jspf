@@ -4,8 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${pageTitle}</title>
-<!-- 유명한거 순서로, common보다 위에 있어야 함 -->
+<title>${pageTitle}</title> <!-- 유명한거 순서로, common보다 위에 있어야 함 -->
+
+<!-- 반응형 모바일을 위해 -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <!-- 제이쿼리 불러오기 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- 폰트어썸 불러오기 -->
@@ -35,29 +38,66 @@
 
 </head>
 <body>
-	<header class="top-bar con-min-width">
-		<div class="con">
-		<c:if test="${isLogined}">
-			<div>로그인된 회원의 닉네임 : ${loginedMember.nickname }</div>
+
+
+<div class="body-content">
+  <header class="top-bar con-min-width">
+    <div class="con flex height-100p">
+      <a href="../home/main" class="logo flex flex-ai-c">
+        <span><i class="fas fa-balance-scale"></i></span>
+        <span>Law</span>
+      </a>
+
+      <div class="flex-grow-1"></div>
+
+      <nav class="top-bar__menu-box-1">
+        <ul class="flex height-100p">
+          <c:if test="${isLogined}"><!-- 로그인 한 회원만 사용 가능 -->
+          <li>
+            <a href="../member/modify" class="flex flex-ai-c height-100p">
+              <span><i class="fas fa-user-edit"></i></span>
+              <span>정보수정</span>
+            </a>
+          </li>
+           <li>
+            <a href="../member/doLogout" class="flex flex-ai-c height-100p">
+              <span><i class="fas fa-sign-out-alt"></i></span>
+              <span>로그아웃</span>
+            </a>
+          </li>
 		</c:if>
 		
-		<div>
-			<a href="../home/main">메인</a>
-			<a href="../article/list?boardId=1">공지사항 리스트</a>
+		<c:if test="${isLogined == false}"><!-- 로그인이 안되어 있을 때 -->
+          <li>
+            <a href="../member/login" class="flex flex-ai-c height-100p">
+              <span><i class="fas fa-sign-in-alt"></i></span>
+              <span>로그인</span>
+            </a>
+          </li>
+           <li>
+            <a href="../member/join" class="flex flex-ai-c height-100p">
+              <span><i class="fas fa-user-plus"></i></span>
+              <span>회원가입</span>
+            </a>
+          </li>
+          <li>
+            <a href="../member/findLoginId" class="flex flex-ai-c height-100p">
+              <span><i class="fas fa-search"></i></span>
+              <span>아이디 찾기</span>
+            </a>
+          </li>
+          <li>
+            <a href="../member/findLoginPw" class="flex flex-ai-c height-100p">
+              <span><i class="fas fa-search"></i></span>
+              <span>비밀번호 찾기</span>
+            </a>
+          </li>
+		</c:if>
+		
 
-			<c:if test="${isLogined}"><!-- 로그인 한 회원만 사용 가능 -->
-				<a href="../article/write?boardId=1">공지사항 글쓰기</a>
-				<a href="../member/modify">정보수정</a>
-				<a href="../member/doLogout">로그아웃</a>
-			</c:if>
-			<c:if test="${isLogined == false}"><!-- 로그인이 안되어 있을 때 -->
-				<a href="../member/login">로그인</a>
-				<a href="../member/join">회원가입</a>
-				<a href="../member/findLoginId">아이디 찾기</a>
-				<a href="../member/findLoginPw">비밀번호 찾기</a>
-			</c:if>
-		</div>
-		</div>
-	</header>
-	
-	<main>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
