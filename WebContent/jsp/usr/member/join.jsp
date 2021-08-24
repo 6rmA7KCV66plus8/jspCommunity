@@ -20,8 +20,8 @@
 
 	// 로그인 아이디 중복검사
 	function DoJoinForm__checkLoginIdDup(el) { // DoJoinForm__checkLoginIdDup = el
-		const form = $(el).closest('form').get(0); // 엘리먼트(el) 조상 중에서 가장 가까운 form을 찾아라
-		const loginId = form.loginId.value;
+		const from = $(el).closest('form').get(0); // 엘리먼트(el) 조상 중에서 가장 가까운 form을 찾아라
+		const loginId = from.loginId.value;
 		
 		$.get(	
 			"getLoginIdDup", // 순수한 정보를 얻을 땐 get을 사용, 보는건 show, 처리하는건 do
@@ -192,10 +192,10 @@
 				</tr>
 
 				<tr>
-				<th></th>
+					<th></th>
 					<td>
 						<div>
-							 <div class="btn-wrap">
+							<div class="btn-wrap">
 								<input class="btn btn-primary" type="submit" value="완료" />
 								<button class="btn btn-info" type="button"
 									onclick="history.back();">취소</button>
