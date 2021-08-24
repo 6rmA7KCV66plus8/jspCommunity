@@ -41,7 +41,7 @@
 
 
 <div class="body-content">
-  <header class="top-bar con-min-width">
+  <header class="top-bar con-min-width visible-md-up">
     <div class="con flex height-100p">
       <a href="../home/main" class="logo flex flex-ai-c">
         <span><i class="fas fa-balance-scale"></i></span>
@@ -129,4 +129,42 @@
     </div>
   </header>
 
+	<header class="mobile-top-bar con-min-width visible-sm-down">
+		<div class="con flex height-100p">
+			<div class="flex-1-0-0"></div>
+				<a href="../home/main" class="logo flex flex-ai-c">
+				<span><i class="fas fa-balance-scale"></i></span>
+				<span>Law</span>
+     		</a>
+			<div class="flex-1-0-0 flex flex-jc-e flex-ai-c">
+				<div class="mobile-top-bar__btn-toggle-mobile-side-bar"> <!-- mobile-top-bar 안에 있어서 mobile-top-bar__를 적어 줘야 함, btn-toggle-mobile-side-bar는 독립적인 버튼이 아님 -->
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+			</div>
+		</div>
+	</header>
+ 	<aside class="mobile-side-bar visible-sm-down">
+ 		
+ 	</aside>
   <main>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
