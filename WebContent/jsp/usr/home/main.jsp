@@ -15,7 +15,7 @@
 </div>
 
 <section class="section-main-text con-min-width">
-	<div class="con"></div>
+	<div class="con">
 	<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
 		Quos ratione magnam laboriosam voluptas dignissimos nam sint
 		blanditiis vero quaerat obcaecati id explicabo totam maiores commodi
@@ -132,6 +132,7 @@
 		Quos ratione magnam laboriosam voluptas dignissimos nam sint
 		blanditiis vero quaerat obcaecati id explicabo totam maiores commodi
 		tenetur et nostrum. Magni ab!</div>
+	</div>
 </section>
 
 <!-- body자식은 div쓰지말고 section을 사용 -->

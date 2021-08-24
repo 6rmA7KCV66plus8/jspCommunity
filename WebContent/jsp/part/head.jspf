@@ -52,6 +52,35 @@
 
       <nav class="top-bar__menu-box-1">
         <ul class="flex height-100p">
+        
+        <li>
+            <a class="flex flex-ai-c height-100p">
+              <span><i class="fas fa-user-edit"></i></span>
+              <span>게시판</span>
+            </a>
+            <div class="con-min-width">
+            	<div class="con">
+            		<ul>
+            		<li><a href="../article/list?boardId=1" class="block">
+            				<span><i class="fas fa-exclamation"></i></span>
+            				<span>공지사항</span>
+            			</a>
+            		</li>
+            		<li><a href="../article/list?boardId=2" class="block">
+            				<span><i class="fas fa-address-book"></i></span>
+            				<span>방명록</span>
+            			</a>
+            		</li>
+            		<li><a href="../article/list?boardId=3" class="block">
+            				<span><i class="fas fa-comments"></i></span>
+            				<span>자유게시판</span>
+            			</a>
+            		</li>
+           			</ul>
+            	</div>
+            </div>
+        </li>
+          
           <c:if test="${isLogined}"><!-- 로그인 한 회원만 사용 가능 -->
           <li>
             <a href="../member/modify" class="flex flex-ai-c height-100p">
