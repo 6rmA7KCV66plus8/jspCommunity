@@ -11,7 +11,7 @@
 	</h1>
 </div>
 
-	<div class="login-form-box detail-box padding-0-10 con-min-width">
+	<div class="article-detail-box detail-box padding-0-10 con-min-width">
 		<div class="con">
 		<table>
 				<colgroup>
@@ -59,7 +59,7 @@
 		</div>
 
 <div class="article-btn-box padding-0-10 con-min-width">
-	<div class="con btn-wrap">
+	<div class="btn-wrap">
 		<a class="btn btn-info" href="${param.listUrl}">목록</a>
 		<a class="btn btn-primary" href="modify?id=${article.id}">수정</a>
 		<a class="btn btn-danger" onclick="if (confirm('정말로 삭제하시겠습니까?') == false) {return false;}" href="doDelete?id=${article.id}">삭제</a>

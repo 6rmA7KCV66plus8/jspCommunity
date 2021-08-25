@@ -192,7 +192,7 @@
 				</tr>
 
 				<tr>
-					<th></th>
+					<th><span> </span></th>
 					<td>
 						<div>
 							<div class="btn-wrap">

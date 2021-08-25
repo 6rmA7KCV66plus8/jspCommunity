@@ -3,9 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="pageTitle" value="${board.name} 게시물 작성" />
 <%@ include file="../../part/head.jspf" %>
-	<h1>${pageTitle}</h1>
 
-	<div>
+<div class="title-bar padding-0-10 con-min-width">
+	<h1 class="con">
+		<span><i class="fas fa-list-ol"></i></span> <span>${pageTitle}</span>
+	</h1>
+</div>
+
+	<div class="article-write-form-box form-box con-min-width padding-0-10">
 	<script>
 	let DoWriteForm__submited = false; // 중복  작성 방지
 	let DoWriteForm__checkedLoginId = "";
@@ -40,25 +45,47 @@
 		DoWriteForm__submited = true;
 		}
 	</script>
-		<form action="doWrite" method="post" onsubmit="DoWriteForm__submit(this); return false;">
+		<form class="con" action="doWrite" method="post" onsubmit="DoWriteForm__submit(this); return false;">
 			<input type="hidden" name="boardId" value="${board.id }"/>
 			<input type="hidden" name="body" />
 			
-				<div>제목</div>
-				<div><input type="text" name="title" maxlength="50" placeholder="제목"/></div>
-			<hr />
-			<div>
-				<div>내용</div>
-				<div>
-					<script type="text/x-template"></script>
-  					<div class="toast-ui-editor"></div>
-				</div>
-			</div>
-			<hr />
-				<div>
-					<input type="submit" value="완료" />
-					<button type="button" onclick="history.back();">취소</button>
-				</div>
+			<table>
+			<colgroup>
+				<col width="150">
+			</colgroup>
+			<tbody>
+				<tr>
+					<th><span>제목</span></th>
+					<td>
+						<div>
+							<input type="text" name="title" maxlength="50" placeholder="제목"/>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th><span>내용</span></th>
+					<td>
+						<div>
+							<div>
+								<script type="text/x-template"></script>
+  								<div class="toast-ui-editor"></div>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th><span> </span></th>
+					<td>
+						<div>
+							<div class="btn-wrap">
+								<input class="btn btn-primary" type="submit" value="완료" />
+								<button class="btn btn-info" type="button" onclick="history.back();">취소</button>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+			</table>
 		</form>
 	</div>
 
