@@ -121,7 +121,7 @@
 						<td class="visible-sm-down">
 							<div class="flex">
 								<span class="article-list-box__id article-list-box__id--mobile">${article.id}</span>
-								<a href="#"
+								<a href="../article/detail?id=${article.id}&listUrl=${encodedCurrentUrl}"
 									class="article-list-box__title article-list-box__title--mobile flex-grow-1 hover-link">${article.title}</a>
 							</div>
 							<div class="flex">

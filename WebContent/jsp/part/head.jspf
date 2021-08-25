@@ -138,6 +138,7 @@
 				</div>
 			</div>
 		</header>
+		<div class="mobile-top-bar-padding visible-sm-down"></div>
 		<!-- 모바일 사이드바 -->
 		<aside class="mobile-side-bar visible-sm-down">
 			<nav class="mobile-side-bar__menu-box-1">

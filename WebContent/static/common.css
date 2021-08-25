@@ -277,6 +277,11 @@ a {
 .mobile-top-bar__btn-toggle-mobile-side-bar.active > div:nth-child(3) {
 	transform: rotate(-45deg);
 }
+
+.mobile-top-bar-padding {
+	height: calc(var(--mobile-top-bar__height) + 20px);
+}
+
 /* 모바일 탑바 끝 */
 
 /* 모바일 사이드바 시작  */
