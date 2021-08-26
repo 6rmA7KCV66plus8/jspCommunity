@@ -65,8 +65,22 @@ public abstract class DispatcherServlet extends HttpServlet {
 			response.getWriter().append("올바른 요청이 아닙니다.");
 			return null; // 올바른 요청이 아니면 null로 빠짐
 		}
-		//db 연결. db는 사용후 끊어줘야함 <48번줄>
-		MysqlUtil.setDBInfo("127.0.0.1", "kjm", "1234", "jspCommunity");
+		
+		String profilesActive = System.getProperty("spring.profiles.active");
+		
+		boolean isProductionMode = false;
+		// profilesActive 값이 없지않고 profilesActive이 production이다
+		if(profilesActive != null && profilesActive.equals("production")) { // 개발모드로 설정
+			isProductionMode = true;
+		}
+		
+		if(isProductionMode) {
+		
+			MysqlUtil.setDBInfo("실무 환경에서는 DB서버 아이피", "kjmLocal", "1234", "jspCommunity"); // production 용
+		} else {
+			//db 연결. db는 사용후 끊어줘야함<line:178>
+			MysqlUtil.setDBInfo("127.0.0.1", "kjm", "1234", "jspCommunity"); // 내 pc 톰캣
+		}
 		
 		String controllerTypeName = requestUriBits[2]; // usr
 		String controllerName = requestUriBits[3]; // member, article 같은 부분
@@ -93,13 +107,13 @@ public abstract class DispatcherServlet extends HttpServlet {
 		// 데이터 추가 인터셉터 끝
 		
 		String currentUrl = request.getRequestURI();
-		
-		if(request.getQueryString() != null) {
+
+		if (request.getQueryString() != null) {
 			currentUrl += "?" + request.getQueryString();
 		}
-		
+
 		String encodedCurrentUrl = Util.getUrlEncoded(currentUrl);
-		
+
 		request.setAttribute("currentUrl", currentUrl);
 		request.setAttribute("encodedCurrentUrl", encodedCurrentUrl);
 		

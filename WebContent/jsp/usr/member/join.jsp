@@ -59,7 +59,6 @@
 				form.btnLoginIdDupCheck.focus();
 				return false;
 			}
-		
 		form.loginPw.value = form.loginPw.value.trim(); // 공백 제거
 		if(form.loginPw.value.length == 0){
 			alert('비밀번호를 입력해주세요.');
@@ -122,8 +121,7 @@
 					<th><span>아이디</span></th>
 					<td>
 						<div>
-							<input type="text" name="loginId" maxlength="50"
-								placeholder="사용할 아이디를 입력해주세요." />
+							<input type="text" name="loginId" maxlength="50" placeholder="사용할 아이디를 입력해주세요." />
 							<button class="btn btn-primary"
 								onclick="DoJoinForm__checkLoginIdDup(this);"
 								name="btnLoginIdDupCheck" type="button">중복체크</button>
