@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.sbs.example.jspCommunity.App;
 import com.sbs.example.jspCommunity.container.Container;
 import com.sbs.example.jspCommunity.dto.Member;
 import com.sbs.example.mysqlutil.MysqlUtil;
@@ -61,20 +62,18 @@ public abstract class DispatcherServlet extends HttpServlet {
 		String requestUri = request.getRequestURI(); // URI : /usr/a/b/c 같은걸 말함
 		String[] requestUriBits = requestUri.split("/"); // URI를 /로 나눔 
 		
-		if(requestUriBits.length < 5) {
+		int minBitsCount = 5;
+		
+		if(App.isProductMode()) { //참이면
+			minBitsCount = 4;
+		}
+		
+		if(requestUriBits.length < minBitsCount) {
 			response.getWriter().append("올바른 요청이 아닙니다.");
 			return null; // 올바른 요청이 아니면 null로 빠짐
 		}
 		
-		String profilesActive = System.getProperty("spring.profiles.active");
-		
-		boolean isProductionMode = false;
-		// profilesActive 값이 없지않고 profilesActive이 production이다
-		if(profilesActive != null && profilesActive.equals("production")) { // 개발모드로 설정
-			isProductionMode = true;
-		}
-		
-		if(isProductionMode) {
+		if(App.isProductMode()) {
 		
 			MysqlUtil.setDBInfo("실무 환경에서는 DB서버 아이피", "kjmLocal", "1234", "jspCommunity"); // production 용
 		} else {
@@ -83,9 +82,19 @@ public abstract class DispatcherServlet extends HttpServlet {
 			MysqlUtil.setDevMode(true);
 		}
 		
-		String controllerTypeName = requestUriBits[2]; // usr
-		String controllerName = requestUriBits[3]; // member, article 같은 부분
-		String actionMethodName = requestUriBits[4]; // list.jsp 파일 같은 부분
+		int controllerTypeNameIndex = 2;
+		int controllerNameIndex = 3;
+		int actionMethodNameIndex = 4;
+		
+		if(App.isProductMode()) { //개발모드가 참이면 = 개발모드 이면
+			controllerTypeNameIndex = 1;
+			controllerNameIndex = 2;
+			actionMethodNameIndex = 3;
+		}
+		
+		String controllerTypeName = requestUriBits[controllerTypeNameIndex]; // usr
+		String controllerName = requestUriBits[controllerNameIndex]; // member, article 같은 부분
+		String actionMethodName = requestUriBits[actionMethodNameIndex]; // list.jsp 파일 같은 부분
 		
 		String actionUrl = "/" + controllerTypeName + "/" + controllerName + "/" + actionMethodName;
 		

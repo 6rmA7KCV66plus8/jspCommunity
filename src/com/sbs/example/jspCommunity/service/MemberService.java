@@ -51,7 +51,7 @@ public class MemberService {
 
 	public ResultData sendTempLoginPwToEmail(Member actor) { // actor : 수행자/ 서비스 레이어에서 member 대신 많이 씀
 		// 메일 제목, 내용 만들기
-		String siteName = App.getSite();
+		String siteName = App.getSiteName();
 		String siteLoginUrl = App.getLoginUrl();
 		String title = "[" + siteName + "] 임시 패스워드 발송";
 		String tempPassword = Util.getTempPassword(6);
