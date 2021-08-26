@@ -21,15 +21,15 @@ public class LikeDao {
 
 	public int removePoint(String relTypeCode, int relId, int memberId) {
 		SecSql sql = new SecSql();
-		sql.append("DELETE FROM `like` AS L");
+		sql.append("DELETE FROM `like`");
 		sql.append("WHERE 1");
-		sql.append("AND L.relTypeCode = ?", relTypeCode);
-		sql.append("AND L.relId = ?", relId);
-		sql.append("AND L.memberId = ?", memberId);
+		sql.append("AND relTypeCode = ?", relTypeCode);
+		sql.append("AND relId = ?", relId);
+		sql.append("AND memberId = ?", memberId);
 
-		return MysqlUtil.delete(sql);	
+		return MysqlUtil.delete(sql);
 	}
-	
+
 	public int setPoint(String relTypeCode, int relId, int memberId, int point) {
 		SecSql sql = new SecSql();
 		sql.append("INSERT INTO `like`");
@@ -40,6 +40,7 @@ public class LikeDao {
 		sql.append(", memberId = ?", memberId);
 		sql.append(", `point` = ?", point);
 
-		return MysqlUtil.insert(sql);	
+		return MysqlUtil.insert(sql);
 	}
+
 }
