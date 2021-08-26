@@ -75,7 +75,7 @@ public abstract class DispatcherServlet extends HttpServlet {
 		
 		if(App.isProductMode()) {
 		
-			MysqlUtil.setDBInfo("실무 환경에서는 DB서버 아이피", "kjmLocal", "1234", "jspCommunity"); // production 용
+			MysqlUtil.setDBInfo("127.0.0.1", "kjmLocal", "1234", "jspCommunityReal"); // production 용
 		} else {
 			//db 연결. db는 사용후 끊어줘야함<line:178>
 			MysqlUtil.setDBInfo("127.0.0.1", "kjm", "1234", "jspCommunity"); // 내 pc 톰캣
