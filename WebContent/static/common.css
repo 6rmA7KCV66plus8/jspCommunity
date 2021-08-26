@@ -524,9 +524,17 @@ html.mobile-side-bar-actived .mobile-side-bar {
   background-color: #ffcc10;
 }
 
+.btn-like {
+	background-color: #0067a3;
+}
+.btn-dislike {
+	background-color: #ff0000;
+}
+
 input, button {
 	font-family: inherit;
 }
+
 /* 버튼 끝 */
 
 /* 버튼랩 시작 */

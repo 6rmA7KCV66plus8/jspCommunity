@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.sbs.example.jspCommunity.container.Container;
 import com.sbs.example.jspCommunity.controller.UsrArticleController;
 import com.sbs.example.jspCommunity.controller.UsrHomeController;
+import com.sbs.example.jspCommunity.controller.UsrLikeController;
 import com.sbs.example.jspCommunity.controller.UsrMemberController;
 
 // DispatcherServlet을 상속 받아야함 : extends DispatcherServlet
@@ -20,14 +21,14 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 		String jspPath = null;
 
 		if( controllerName.equals("home")) {
-			UsrHomeController homeController = Container.homeController;
+			UsrHomeController homeController = Container.usrHomeController;
 			
 			if(actionMethodName.equals("main")) {
 				jspPath = homeController.showMain(request, response); // memberController의 showList를 호출
 			}
 		}
 		else if( controllerName.equals("member")) {
-			UsrMemberController memberController = Container.memberController;
+			UsrMemberController memberController = Container.usrMemberController;
 		
 			if(actionMethodName.equals("list")) {
 				jspPath = memberController.showList(request, response); // memberController의 showList를 호출
@@ -70,7 +71,7 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 			}
 			
 		} else if (controllerName.equals("article")) {
-			UsrArticleController articleController = Container.articleController;
+			UsrArticleController articleController = Container.usrArticleController;
 			
 			if(actionMethodName.equals("list")) {
 				jspPath = articleController.showList(request, response); // memberController의 showList를 호출
@@ -96,8 +97,22 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 			else if(actionMethodName.equals("doDelete")) {
 				jspPath = articleController.doDelete(request, response);
 			}
-		}
+		} else if (controllerName.equals("like")) {
+			UsrLikeController likeController = Container.usrLikeController;
 		
+			if(actionMethodName.equals("doLike")) {
+				jspPath = likeController.doLike(request, response);
+			}
+			else if (actionMethodName.equals("doCancelLike")) {
+				jspPath = likeController.doCancelLike(request, response);
+			} 
+			else if (actionMethodName.equals("doDislike")) {
+				jspPath = likeController.doDislike(request, response);
+			} 
+			else if (actionMethodName.equals("doCancelDislike")) {
+				jspPath = likeController.doCancelDislike(request, response);
+			}
+		}
 		return jspPath;
 
 	}
