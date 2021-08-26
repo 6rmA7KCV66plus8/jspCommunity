@@ -97,6 +97,7 @@
 				<col width="100">
 				<col width="200">
 				<col width="150">
+				<col width="150">
 			</colgroup>
 			<thead class="visible-md-up">
 				<tr>
@@ -104,6 +105,7 @@
 					<th>날짜</th>
 					<th>갱신날짜</th>
 					<th>작성자</th>
+					<th>좋아요</th>
 					<th>제목</th>
 				</tr>
 			</thead>
@@ -114,6 +116,16 @@
 						<td><span class="article-list-box__reg-date">${article.regDate}</span></td>
 						<td><span class="article-list-box__update-date">${article.updateDate}</span></td>
 						<td><span class="article-list-box__writer">${article.extra__writer}</span></td>
+						<td>
+							<span class="article-list-box__likeOnlyPoint">
+								<span><i class="far fa-thumbs-up"></i></span>
+								<span>${article.extra__likeOnlyPoint}</span>
+							</span>						
+							<span class="article-list-box__dislikeOnlyPoint">
+								<span><i class="far fa-thumbs-down"></i></span>
+								<span>${article.extra__dislikeOnlyPoint}</span>
+							</span>
+						</td>
 						<td><a href="../article/detail?id=${article.id}&listUrl=${encodedCurrentUrl}"
 							class="article-list-box__title articles-list-box__title--pc hover-link">${article.title}</a></td>
 
@@ -123,6 +135,16 @@
 								<span class="article-list-box__id article-list-box__id--mobile">${article.id}</span>
 								<a href="../article/detail?id=${article.id}&listUrl=${encodedCurrentUrl}"
 									class="article-list-box__title article-list-box__title--mobile flex-grow-1 hover-link">${article.title}</a>
+							</div>
+							<div class="flex">
+									<span class="article-list-box__likeOnlyPoint">
+										<span><i class="far fa-thumbs-up"></i></span>
+										<span>${article.extra__likeOnlyPoint}</span>
+									</span>						
+									<span class="article-list-box__dislikeOnlyPoint">
+										<span><i class="far fa-thumbs-down"></i></span>
+										<span>${article.extra__dislikeOnlyPoint}</span>
+									</span>
 							</div>
 							<div class="flex">
 								<span

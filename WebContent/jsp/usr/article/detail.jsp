@@ -76,7 +76,7 @@
 				href="../like/doLike?relTypeCode=article&relId=${article.id}&redirectUrl=${encodedCurrentUrl}"
 				onclick="if ( !confirm('좋아요를 누르시겠습니까?') ) return false;">
 				<span>
-					<i class="fas fa-thumbs-up"></i>
+					<i class="far fa-thumbs-up"></i>
 				</span>
 				<span>좋아요</span>
 			</a>
@@ -86,7 +86,7 @@
 				href="../like/doCancelLike?relTypeCode=article&relId=${article.id}&redirectUrl=${encodedCurrentUrl}"
 				onclick="if ( !confirm('좋아요를 취소 하시겠습니까?') ) return false;">
 				<span>
-					<i class="fas fa-thumbs-up"></i>
+					<i class="far fa-thumbs-up"></i>
 				</span>
 				<span>좋아요 취소</span>
 			</a>
@@ -96,7 +96,7 @@
 				href="../like/doDislike?relTypeCode=article&relId=${article.id}&redirectUrl=${encodedCurrentUrl}"
 				onclick="if ( !confirm('싫어요를 누르시겠습니까?') ) return false;">
 				<span>
-					<i class="fas fa-thumbs-down"></i>
+					<i class="far fa-thumbs-down"></i>
 				</span>
 				<span>싫어요</span>
 			</a>
@@ -106,7 +106,7 @@
 				href="../like/doCancelDislike?relTypeCode=article&relId=${article.id}&redirectUrl=${encodedCurrentUrl}"
 				onclick="if( !confirm('싫어요를 취소 하시겠습니까?') ) return false;">
 				<span>
-					<i class="fas fa-thumbs-down"></i>
+					<i class="far fa-thumbs-down"></i>
 				</span>
 				<span>싫어요 취소</span>
 			</a>

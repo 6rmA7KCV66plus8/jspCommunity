@@ -19,11 +19,18 @@ public class ArticleDao {
 		sql.append(", M.name AS extra__writer"); // 회원이름
 		sql.append(", B.name AS extra__boardName"); // 게시판 이름
 		sql.append(", B.code AS extra__boardCode"); // 게시판 코드
+		sql.append(", IFNULL(SUM(L.point), 0) AS extra__likePoint"); // 좋아요, 싫어요 합계
+		sql.append(", IFNULL(SUM(IF(L.point > 0, L.point, 0)), 0) AS extra__likeOnlyPoint"); // 좋아요 개수
+		sql.append(", IFNULL(SUM(IF(L.point < 0, L.point * -1, 0)), 0) extra__dislikeOnlyPoint"); // 싫어요 개수
 		sql.append("FROM article AS A");
 		sql.append("INNER JOIN `member` AS M");
 		sql.append("ON A.memberId = M.id");
 		sql.append("INNER JOIN `board` AS B");
 		sql.append("ON A.boardId = B.id");
+		sql.append("LEFT JOIN `like` AS L");
+		sql.append("ON L.relTypeCode = 'article'");
+		sql.append("AND A.id = L.relId");
+		
 		if(boardId != 0) {
 			sql.append("WHERE A.boardId = ?", boardId);
 		}
@@ -39,6 +46,9 @@ public class ArticleDao {
 				sql.append("AND (A.title LIKE CONCAT('%', ? '%') OR A.body LIKE CONCAT('%', ? '%'))", searchKeyword, searchKeyword); // 제목+내용에서 검색
 			}
 		}
+		
+		sql.append("GROUP BY A.id"); //WHERE가 끝난 다음
+		
 		sql.append("ORDER BY A.id DESC");
 //		System.out.println("sql.getRawSql() : " + sql.getRawSql()); // getRawSql : 최종 형태의 쿼리를 출력할 수 있음
 		
