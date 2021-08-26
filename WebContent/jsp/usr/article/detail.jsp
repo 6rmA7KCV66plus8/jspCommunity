@@ -60,6 +60,31 @@
 
 <div class="article-btn-box padding-0-10 con-min-width">
 	<div class="con btn-wrap">
+		<c:if test="${article.extra.actorCanLike}">
+			<a class="btn btn-primary" href="${param.listUrl}">
+				<span><i class="fas fa-thumbs-up"></i></span>
+				<span>좋아요</span>
+			</a>
+		</c:if>
+		<c:if test="${article.extra.actorCanCancleLike}">
+			<a class="btn btn-danger" href="${param.listUrl}">
+				<span><i class="fas fa-thumbs-up"></i></span>
+				<span>좋아요 취소</span>
+			</a>
+		</c:if>
+		<c:if test="${article.extra.actorCanDislike}">
+			<a class="btn btn-danger" href="${param.listUrl}">
+				<span><i class="fas fa-thumbs-down"></i></span>
+				<span>싫어요</span>
+			</a>
+		</c:if>
+		<c:if test="${article.extra.actorCanCancleDislike}">
+			<a class="btn btn-danger" href="${param.listUrl}">
+				<span><i class="fas fa-thumbs-down"></i></span>
+				<span>싫어요 취소</span>
+			</a>
+		</c:if>
+	
 		<a class="btn btn-info" href="${param.listUrl}">목록</a>
 		<a class="btn btn-primary" href="modify?id=${article.id}">수정</a>
 		<a class="btn btn-danger" onclick="if (confirm('정말로 삭제하시겠습니까?') == false) {return false;}" href="doDelete?id=${article.id}">삭제</a>

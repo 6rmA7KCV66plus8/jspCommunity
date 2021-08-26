@@ -80,6 +80,7 @@ public abstract class DispatcherServlet extends HttpServlet {
 		} else {
 			//db 연결. db는 사용후 끊어줘야함<line:178>
 			MysqlUtil.setDBInfo("127.0.0.1", "kjm", "1234", "jspCommunity"); // 내 pc 톰캣
+			MysqlUtil.setDevMode(true);
 		}
 		
 		String controllerTypeName = requestUriBits[2]; // usr

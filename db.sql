@@ -162,3 +162,16 @@ ALTER TABLE `attr` ADD INDEX (`relTypeCode`, `typeCode`, `type2Code`);
 
 # attr에 만료날짜 추가
 ALTER TABLE `attr` ADD COLUMN `expireDate` DATETIME NULL AFTER `value`; #expireDate : 만료 날짜를 구현할 수 있다
+
+# 좋아요 테이블 추가
+CREATE TABLE `like` (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    relTypeCode CHAR(30) NOT NULL,
+    relId INT(10) UNSIGNED NOT NULL,
+    memberId INT(10) UNSIGNED NOT NULL,
+    `point` SMALLINT(1) NOT NULL
+);
+# 좋아요 인덱스
+ALTER TABLE `jspcommunity`.`like` ADD KEY `relTypeCode` (`relTypeCode` , `relId` , `memberId`); 

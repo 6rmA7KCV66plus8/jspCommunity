@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import com.sbs.example.jspCommunity.container.Container;
 import com.sbs.example.jspCommunity.dto.Article;
 import com.sbs.example.jspCommunity.dto.Board;
+import com.sbs.example.jspCommunity.dto.Member;
 import com.sbs.example.jspCommunity.service.ArticleService;
 import com.sbs.example.util.Util;
 
@@ -95,7 +96,9 @@ public class UsrArticleController extends Controller {
 			
 		}
 		
-		Article article = articleService.getForPrintArticleById(id);
+		Member loginedMember = (Member)request.getAttribute("loginedMember");
+		
+		Article article = articleService.getForPrintArticleById(id, loginedMember);
 		
 		if(article == null) {
 			return msgAndBack(request, id + "번 게시물은 존재하지 않습니다.");
@@ -219,7 +222,7 @@ public class UsrArticleController extends Controller {
 	}
 	//글 수정
 	public String doModify(HttpServletRequest request, HttpServletResponse response) {
-int id = Util.getAsInt(request.getParameter("id"), 0);
+		int id = Util.getAsInt(request.getParameter("id"), 0);
 		
 		if(id == 0) {
 			return msgAndBack(request, "번호를 입력해주세요.");
