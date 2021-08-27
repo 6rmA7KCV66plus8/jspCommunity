@@ -6,21 +6,24 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.sbs.example.jspCommunity.container.Container;
 import com.sbs.example.jspCommunity.dto.Article;
 import com.sbs.example.jspCommunity.dto.Board;
 import com.sbs.example.jspCommunity.dto.Member;
+import com.sbs.example.jspCommunity.dto.Reply;
 import com.sbs.example.jspCommunity.service.ArticleService;
+import com.sbs.example.jspCommunity.service.ReplyService;
 import com.sbs.example.util.Util;
 
 public class UsrArticleController extends Controller {
 
 	private ArticleService articleService;
-
+	private ReplyService replyService;
+	
 	public UsrArticleController() {
 		articleService = Container.articleService;
+		replyService = Container.replyService;
 	}
 	
 	
@@ -106,6 +109,9 @@ public class UsrArticleController extends Controller {
 		}
 		
 		request.setAttribute("article", article);
+		
+		List<Reply> replies = replyService.getForPrintReplise("article", article.getId());
+		request.setAttribute("replies", replies);
 		
 		return "usr/article/detail";
 	}

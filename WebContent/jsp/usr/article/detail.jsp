@@ -129,7 +129,7 @@
 </div>
 
 <c:if test="${isLogined == false}">
-	<div class="article-reply-write-form-box form-box con-min-width padding-0-10">
+	<div class="reply-write-form-box form-box con-min-width padding-0-10">
 		<div class="con">
 			댓글 작성은 먼저 
 			<a class="udl hover-link" href="../member/login?afterLoginUrl=${encodedCurrentUrl}">로그인<i class="fas fa-hand-pointer"></i></a>
@@ -139,7 +139,7 @@
 </c:if>
 
 <c:if test="${isLogined}">
-<div class="article-reply-write-form-box form-box con-min-width padding-0-10">
+<div class="reply-write-form-box form-box con-min-width padding-0-10">
 	<script>
 	let Reply__DoWriteForm__submited = false; // 중복  작성 방지
 	let Reply__DoWriteForm__checkedLoginId = "";
@@ -205,4 +205,108 @@
 		</form>
 </div>
 </c:if>
+
+
+
+
+<div class="title-bar padding-0-10 con-min-width">
+	<h1 class="con">
+		<span><i class="fas fa-list-ol"></i></span> <span>댓글 리스트</span>
+	</h1>
+</div>
+
+<hr />
+
+<div class="reply-list-total-count-box con-min-width padding-0-10">
+<div class="con">
+	<div>
+		<span><i class="fas fa-eye"></i></span>
+		<span>댓글 : </span>
+		<span class="color-red">${replies.size()}</span>	
+	</div>
+</div>
+</div>
+
+<div class="reply-list-box response-list-box con-min-width padding-0-10">
+	<div class="con">
+		<table>
+			<colgroup>
+				<col width="50"> <!-- 번호 -->
+				<col width="150"> <!-- 날짜 -->
+				<col width="70"> <!-- 작성자 -->
+				<col width="90"> <!-- 좋아요 -->
+			</colgroup>
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>날짜</th>
+					<th>작성자</th>
+					<th>좋아요</th>
+					<th>내용</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${replies}" var="reply">
+					<tr>
+						<td><span class="response-list-box__id">${reply.id}</span></td>
+						<td><span class="response-list-box__reg-date">${reply.regDate}</span></td>
+					<!--<td><span class="response-list-box__update-date">${reply.updateDate}</span></td>-->
+						<td><span class="response-list-box__writer">${reply.extra__writer}</span></td>
+						<td>
+							<span class="response-list-box__likeOnlyPoint">
+								<span><i class="far fa-thumbs-up"></i></span>
+								<span>${reply.extra__likeOnlyPoint}</span>
+							</span>						
+							<span class="response-list-box__dislikeOnlyPoint">
+								<span><i class="far fa-thumbs-down"></i></span>
+								<span>${reply.extra__dislikeOnlyPoint}</span>
+							</span>
+						</td>
+						<td>
+						<script type="text/x-template">${reply.body}</script>
+						<div class="toast-ui-viewer"></div>
+						</td>
+						<!-- 모바일 -->
+						<td class="visible-sm-down">
+							<div class="flex">
+								<span class="response-list-box__id response-list-box__id--mobile">${reply.id}</span>
+							</div>
+							<div class="flex">
+									<span class="response-list-box__likeOnlyPoint">
+										<span><i class="far fa-thumbs-up"></i></span>
+										<span>${reply.extra__likeOnlyPoint}</span>
+									</span>						
+									<span class="response-list-box__dislikeOnlyPoint">
+										<span><i class="far fa-thumbs-down"></i></span>
+										<span>${reply.extra__dislikeOnlyPoint}</span>
+									</span>
+							</div>
+							
+							<div class="flex">
+								<span
+									class="response-list-box__writer response-list-box__writer--mobile">${reply.extra__writer}</span>
+								<span>&nbsp;|&nbsp;</span> <span
+									class="response-list-box__reg-date response-list-box__reg-date--mobile">${reply.regDate}</span>
+							</div>
+							
+							<div>
+								<script type="text/x-template">${reply.body}</script>
+								<div class="toast-ui-viewer"></div>
+							</div>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
 <%@ include file="../../part/foot.jspf"%>
