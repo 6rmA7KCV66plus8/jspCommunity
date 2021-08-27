@@ -47,6 +47,9 @@
 <script src="${pageContext.request.contextPath}/static/common.js" defer></script>
 <!-- difer : 나중에 실행 됨(지연) -->
 
+<%="<script>"%>
+var param = ${paramJson};
+<%="</script>"%>
 
 <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
 </head>

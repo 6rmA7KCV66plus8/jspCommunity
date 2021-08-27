@@ -114,7 +114,6 @@ public abstract class DispatcherServlet extends HttpServlet {
 		request.setAttribute("loginedMemberId", loginedMemberId);
 		request.setAttribute("loginedMember", loginedMember);
 		
-		// 데이터 추가 인터셉터 끝
 		
 		String currentUrl = request.getRequestURI();
 
@@ -126,6 +125,14 @@ public abstract class DispatcherServlet extends HttpServlet {
 
 		request.setAttribute("currentUrl", currentUrl);
 		request.setAttribute("encodedCurrentUrl", encodedCurrentUrl);
+		
+		Map<String, Object> param = Util.getParamMap(request);
+		String paramJson = Util.getJsonText(param);
+		
+		request.setAttribute("paramMap", param);
+		request.setAttribute("paramJson", paramJson);
+		
+		// 데이터 추가 인터셉터 끝
 		
 		// 로그인 필요 필터링 인터셉터 시작
 		List<String> needToLoginActionUrls = new ArrayList<>();
