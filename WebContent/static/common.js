@@ -50,11 +50,26 @@ function Editor__init() {
     	initialValue = " ";
     }
     
+    let height = 600; // 기본크기 600 글작성 부분
+    
+    if($(node).attr('data-height')) { // data-height="크기" 로 조정 가능, ex) <div class="toast-ui-editor" data-height="200"></div>
+    	height = parseInt($(node).attr('data-height'));
+    }
+    
+    let previewStyle = 'vertical';
+    if($(node).attr('data-previewStyle')) {
+    	hepreviewStyleight = $(node).attr('data-previewStyle');
+    } else {
+    	if($(window).width() < 600 ) { // 모바일은 탭으로 열리게 
+    		previewStyle = 'tab';
+    	}
+    }
+    		
     var editor = new toastui.Editor({
       el: node,
-      previewStyle: 'vertical',
+      previewStyle: previewStyle,
       initialValue: initialValue,
-      height:600,
+      height:height,
       plugins: [toastui.Editor.plugin.codeSyntaxHighlight, youtubePlugin, codepenPlugin]
     });
     $(node).data('data-toast-editor', editor);

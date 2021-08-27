@@ -152,7 +152,7 @@ CREATE TABLE attr (
     `value` TEXT NOT NULL # 값인데 1 또는 0이 들어감
 );
 
-# attr 유니크 인덱스 걸기
+# attr 유니크 인덱스 걸기 !엄청 중요함
 ## 중복변수 생성금지
 ## 변수찾는 속도 최적화
 ALTER TABLE `attr` ADD UNIQUE INDEX (`relTypeCode`, `relId`, `typeCode`, `type2Code`); # 변수는 똑같은 이름이 2개이상 존재하면 안되서 unique 제약을 걸어둠
@@ -173,5 +173,19 @@ CREATE TABLE `like` (
     memberId INT(10) UNSIGNED NOT NULL,
     `point` SMALLINT(1) NOT NULL
 );
-# 좋아요 인덱스
+# 좋아요 인덱스 !엄청 종요함
 ALTER TABLE `jspcommunity`.`like` ADD KEY `relTypeCode` (`relTypeCode` , `relId` , `memberId`); 
+
+
+# 댓글 테이블 추가
+CREATE TABLE `reply` (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    relTypeCode CHAR(30) NOT NULL,
+    relId INT(10) UNSIGNED NOT NULL,
+    memberId INT(10) UNSIGNED NOT NULL,
+    `body` TEXT NOT NULL
+);
+# 뎃글에 인덱스 걸기 !엄청 중요함
+ALTER TABLE `jspcommunity`.`reply` ADD INDEX (`relTypeCode` , `relId`); 

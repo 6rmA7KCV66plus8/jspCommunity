@@ -120,5 +120,89 @@
 		<!-- 취소(false) 버튼을 눌렀을 때 return false;가 실행 -->
 	</div>
 </div>
+<!-- 댓글 작성 -->
 
+<div class="title-bar padding-0-10 con-min-width">
+	<h1 class="con">
+		<span><i class="fab fa-replyd"></i></span> <span>댓글</span>
+	</h1>
+</div>
+
+<c:if test="${isLogined == false}">
+	<div class="article-reply-write-form-box form-box con-min-width padding-0-10">
+		<div class="con">
+			댓글 작성은 먼저 
+			<a class="udl hover-link" href="../member/login?afterLoginUrl=${encodedCurrentUrl}">로그인<i class="fas fa-hand-pointer"></i></a>
+			 후 이용해주세요.
+		</div>
+	</div>
+</c:if>
+
+<c:if test="${isLogined}">
+<div class="article-reply-write-form-box form-box con-min-width padding-0-10">
+	<script>
+	let Reply__DoWriteForm__submited = false; // 중복  작성 방지
+	let Reply__DoWriteForm__checkedLoginId = "";
+
+	// 폼 발송전 체크
+	function Reply__DoWriteForm__submit(form){
+		if(Reply__DoWriteForm__submited){ // true
+			alert('처리중 입니다');	
+			return;
+		}
+
+			const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
+			const body = editor.getMarkdown().trim();
+
+			if( body.length == 0) {
+				alert('내용을 입력해주세요.');
+				editor.focus();
+
+				return;
+			}
+			
+			form.body.value = body;
+		
+		form.submit();
+		Reply__DoWriteForm__submited = true;
+		}
+	</script>
+		<form class="con" action="../reply/doWrite" method="post" onsubmit="Reply__DoWriteForm__submit(this); return false;">
+			<input type="hidden" name="redirectUrl" value="${currentUrl}"/>
+			<input type="hidden" name="relTypeCode" value="article"/>
+			<input type="hidden" name="relId" value="${article.id}"/>
+			<input type="hidden" name="body" />
+			
+			<table>
+			<colgroup>
+				<col width="150">
+			</colgroup>
+			<tbody>
+				<tr>
+					<th><span> </span></th>
+					<td>
+						<div>
+							<div>
+								<script type="text/x-template"></script>
+  								<div class="toast-ui-editor" data-height="200"></div>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th><span> </span></th>
+					<td>
+						<div>
+							<div class="btn-wrap">
+								<input class="btn btn-primary" type="submit" value="완료" />
+								<button class="btn btn-info" type="button" onclick="history.back();">취소</button>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+			</table>
+		</form>
+</div>
+</c:if>
 <%@ include file="../../part/foot.jspf"%>

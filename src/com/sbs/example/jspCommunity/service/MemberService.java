@@ -113,7 +113,7 @@ public class MemberService {
 		String date = attrService.getValue("member__" + actorId + "__extra__loginPwModifiedDate");
 		
 		if(Util.isEmpty(date)) { // attr은 값이 없으면 널이 아니라 공백을 return함 , attrService line:52 참조
-			return true;
+			return false; // return 값이 true이면 비밀번호 사용 경과 90일 이상인 회원은 비밀번호를 바꾸라는 메세지가 나옴
 		}
 		
 		int pass = Util.getPassedSecondsFrom(date);

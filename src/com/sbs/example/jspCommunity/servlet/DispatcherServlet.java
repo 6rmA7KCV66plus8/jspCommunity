@@ -140,6 +140,10 @@ public abstract class DispatcherServlet extends HttpServlet {
 		needToLoginActionUrls.add("/usr/article/doModify");
 		needToLoginActionUrls.add("/usr/article/doDelete");
 		
+		needToLoginActionUrls.add("/usr/reply/doWrite");
+		needToLoginActionUrls.add("/usr/reply/doDelete");
+		needToLoginActionUrls.add("/usr/reply/doModify");
+	
 		if(needToLoginActionUrls.contains(actionUrl)) { // 내가 이동하려는 곳이 리스트 6곳이면
 			if((boolean)request.getAttribute("isLogined") == false) { // 로그인이 안되어있음
 				request.setAttribute("alertMsg", "로그인을 해주세요.");

@@ -9,6 +9,7 @@ import com.sbs.example.jspCommunity.controller.UsrArticleController;
 import com.sbs.example.jspCommunity.controller.UsrHomeController;
 import com.sbs.example.jspCommunity.controller.UsrLikeController;
 import com.sbs.example.jspCommunity.controller.UsrMemberController;
+import com.sbs.example.jspCommunity.controller.UsrReplyController;
 
 // DispatcherServlet을 상속 받아야함 : extends DispatcherServlet
 // ex) /usr/member/list : controllerName에 member가 들어가고 actionMethodName에 list가 들어간다 / adm도 동일함
@@ -100,7 +101,7 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 		} else if (controllerName.equals("like")) {
 			UsrLikeController likeController = Container.usrLikeController;
 		
-			if(actionMethodName.equals("doLike")) {
+			if(actionMethodName.equals("doLike")) { // 좋아요 싫어요
 				jspPath = likeController.doLike(request, response);
 			}
 			else if (actionMethodName.equals("doCancelLike")) {
@@ -111,6 +112,18 @@ public class UsrDispatcherServlet extends DispatcherServlet {
 			} 
 			else if (actionMethodName.equals("doCancelDislike")) {
 				jspPath = likeController.doCancelDislike(request, response);
+			}
+		} else if (controllerName.equals("reply")) { // 댓글 
+			UsrReplyController replyController = Container.usrReplyController;
+			
+			if(actionMethodName.equals("doWrite")) {
+				jspPath = replyController.doWrite(request, response);
+			}
+			else if (actionMethodName.equals("doDelete")) {
+				jspPath = replyController.doDelete(request, response);
+			} 
+			else if (actionMethodName.equals("doModify")) {
+				jspPath = replyController.doModify(request, response);
 			}
 		}
 		return jspPath;
