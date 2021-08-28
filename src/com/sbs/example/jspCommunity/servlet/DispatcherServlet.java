@@ -156,7 +156,7 @@ public abstract class DispatcherServlet extends HttpServlet {
 				request.setAttribute("alertMsg", "로그인을 해주세요.");
 				request.setAttribute("replaceUrl", "../member/login?afterLoginUrl=" + encodedCurrentUrl);
 				
-				RequestDispatcher rd = request.getRequestDispatcher("/jsp/common/redirect.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher(getJspDirPath() + "/common/redirect.jsp");
 				rd.forward(request, response);
 			}
 		}
@@ -178,7 +178,7 @@ public abstract class DispatcherServlet extends HttpServlet {
 				request.setAttribute("alertMsg", "로그아웃을 해주세요.");
 				request.setAttribute("historyBack", true);
 				
-				RequestDispatcher rd = request.getRequestDispatcher("/jsp/common/redirect.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher(getJspDirPath() + "/common/redirect.jsp");
 				rd.forward(request, response);
 			}
 		}
@@ -198,7 +198,12 @@ public abstract class DispatcherServlet extends HttpServlet {
 		MysqlUtil.closeConnection();
 		
 																//UriBits = /1/2/3/4
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/" + jspPath +".jsp");
+			RequestDispatcher rd = request.getRequestDispatcher(getJspDirPath() + "/" + jspPath +".jsp");
 			rd.forward(request, response);
 	}
+	
+	private String getJspDirPath() {
+		return "/WEB-INF/jsp";
+	}
 }
+
