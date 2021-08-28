@@ -198,7 +198,7 @@ public abstract class DispatcherServlet extends HttpServlet {
 		MysqlUtil.closeConnection();
 		
 																//UriBits = /1/2/3/4
-			RequestDispatcher rd = request.getRequestDispatcher("/jsp/" + jspPath +".jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/" + jspPath +".jsp");
 			rd.forward(request, response);
 	}
 }
