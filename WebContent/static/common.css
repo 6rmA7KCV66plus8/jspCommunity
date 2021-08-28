@@ -255,7 +255,7 @@ a {
 	left: 0;
 	width: 100%;
 	height: 20%;
-	background-color: red;
+	background-color: white;
 	transition : top .3s, opacity .3s, transform .3s; /*마우스를 올리면 부드럽게 움직임*/
 }
 
@@ -502,7 +502,7 @@ main > .title-bar:not(:first-child) {
     margin-left:5px;
   }
 
-  .response-list-box > .con > table > tbody > tr > td.visible-sm-down > .flex:not(:first-child) {
+  .response-list-box > .con > table > tbody > tr > td.visible-sm-down > :not(:first-child) { /* 첫번째가 아니면 모두 margin이 들어감 */
     margin-top:10px;
   }
 

@@ -255,6 +255,7 @@
 				<col width="150"> <!-- 날짜 -->
 				<col width="70"> <!-- 작성자 -->
 				<col width="90"> <!-- 좋아요 -->
+				<col width="200">
 			</colgroup>
 			<thead>
 				<tr>
@@ -262,6 +263,7 @@
 					<th>날짜</th>
 					<th>작성자</th>
 					<th>좋아요</th>
+					<th>비고</th>
 					<th>내용</th>
 				</tr>
 			</thead>
@@ -282,6 +284,14 @@
 								<span>${reply.extra__dislikeOnlyPoint}</span>
 							</span>
 						</td>
+						
+						<td>
+							<div class="btn-wrap">
+								<a class="btn btn-info" href="../reply/modify?id=${reply.id}&redirectUrl=${encodedCurrentUrl}">수정</a>
+								<a class="btn btn-danger" onclick="if (confirm('정말로 삭제하시겠습니까?') == false) {return false;}" href="../reply/doDelete?id=${reply.id}&redirectUrl=${encodedCurrentUrl}">삭제</a>
+							</div>
+						</td>
+						
 						<td>
 						<script type="text/x-template">${reply.body}</script>
 						<div class="toast-ui-viewer"></div>
@@ -307,6 +317,11 @@
 									class="response-list-box__writer response-list-box__writer--mobile">${reply.extra__writer}</span>
 								<span>&nbsp;|&nbsp;</span> <span
 									class="response-list-box__reg-date response-list-box__reg-date--mobile">${reply.regDate}</span>
+							</div>
+							
+							<div class="btn-wrap">
+								<a class="btn btn-info" href="../reply/modify?id=${reply.id}&redirectUrl=${encodedCurrentUrl}">수정</a>
+								<a class="btn btn-danger" onclick="if (confirm('정말로 삭제하시겠습니까?') == false) {return false;}" href="../reply/doDelete?id=${reply.id}&redirectUrl=${encodedCurrentUrl}">삭제</a>
 							</div>
 							
 							<div>
