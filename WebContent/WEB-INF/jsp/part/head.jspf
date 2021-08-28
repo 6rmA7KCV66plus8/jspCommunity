@@ -8,7 +8,7 @@
 <!-- 유명한거 순서로, common보다 위에 있어야 함 -->
 
 <!-- 반응형 모바일을 위해 -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- 제이쿼리 불러오기 -->
 <script
@@ -48,8 +48,17 @@
 <!-- difer : 나중에 실행 됨(지연) -->
 
 <%="<script>"%>
-var param = ${paramJson};
+const param = ${paramJson};
 <%="</script>"%>
+
+<script> // 모바일 사파리 뒤로가기 BFCache 문제 해결
+window.onpageshow = function(event) { //BFCahe
+	if(event.persisted) { // event가 persisted(유지) 되고있는지 묻고
+		window.location.reload(); // 그러면 reload 통해서 날린다
+	}
+}
+</script>
+
 
 <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
 </head>

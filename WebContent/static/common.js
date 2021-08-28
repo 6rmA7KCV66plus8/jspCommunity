@@ -115,3 +115,11 @@ function MobileTopbar_hide(){
 
 MobileTopbar_init();
 // 모바일 토스트 에디터 끝
+
+
+//현재 휴대폰이 아이폰인지 아닌지 체크하는 것
+function iOS() {
+	return [ 'iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod' ].includes(navigator.platform)
+	// iPad on iOS 13 detection
+	|| (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+}

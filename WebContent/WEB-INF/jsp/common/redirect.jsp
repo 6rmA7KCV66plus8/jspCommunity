@@ -25,7 +25,7 @@
 			
 		var replaceUrl = '<%=request.getAttribute("replaceUrl")%>'.trim();
 
-		if(replaceUrl){
+		if(replaceUrl != '' && replaceUrl != 'null'){ // replaceUrl의 값이 공백도 아니고 null도 아닐 때 실행
 			location.replace(replaceUrl);
 		}
 	</script>
