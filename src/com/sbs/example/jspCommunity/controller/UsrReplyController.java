@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sbs.example.jspCommunity.container.Container;
 import com.sbs.example.jspCommunity.dto.Article;
+import com.sbs.example.jspCommunity.dto.Reply;
 import com.sbs.example.jspCommunity.service.ArticleService;
 import com.sbs.example.jspCommunity.service.ReplyService;
 import com.sbs.example.util.Util;
@@ -68,10 +69,32 @@ public class UsrReplyController extends Controller {
 	}
 
 	public String doDelete(HttpServletRequest request, HttpServletResponse response) {
+		String redirectUrl = request.getParameter("redirectUrl");
 		
-		return null;
+		int loginedmemberId = (int)request.getAttribute("loginedMemberId");
+		
+		int id = Util.getAsInt(request.getParameter("id"), 0);
+		
+		if(id == 0) {
+			return msgAndBack(request, "번호를 입력해주세요.");
+		}
+		
+		Reply reply = replyService.getReply(id);
+		
+		if(reply == null) {
+			return msgAndBack(request, id + "번 댓글은 존재하지 않습니다.");
+		}
+		
+		if(replyService.actorCanDelete(reply, loginedmemberId) == false) {
+			return msgAndBack(request, "삭제 권한이 없습니다.");
+		}
+		
+		replyService.delete(id);
+		
+		return msgAndReplace(request, id + "번 댓글이 삭제되었습니다.", redirectUrl);
+		
 	}
-
+	
 	public String doModify(HttpServletRequest request, HttpServletResponse response) {
 		
 		return null;
