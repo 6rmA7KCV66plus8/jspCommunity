@@ -17,6 +17,7 @@
 - [x] 로그인 폼 꾸미기
 - [x] 회원가입 폼 꾸미기
 - [x] 좋아요, 싫어요
+- [x] tomcat 한방배포
 
 # 당장 할일 리스트
 - [ ] 게시물 블라인드
@@ -34,5 +35,20 @@
 - [ ] 회원인증
 - [ ] 관리자 페이지
 - [ ] 1:1 쪽지
-- [ ] 좋아요, 싫어요
 - [ ] 신고
+
+
+
+# 메이븐 settings.xml 템플릿
+<!--
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <servers>
+        <server>
+            <id>law__manager_text</id>
+            <username>톰캣 웹 관리자의 계정명</username>
+            <password>톰캣 웹 관리자의 계정의 비밀번호</password>
+        </server>
+    </servers>
+</settings>
+-->
